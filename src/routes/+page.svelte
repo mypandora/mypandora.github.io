@@ -1,27 +1,4 @@
 <script>
-  let products = [
-    {
-      name: '@mypandora/spreadsheet',
-      description: '一个基于 canvas 的轻量级报表。',
-      link: 'https://github.com/mypandora/spreadsheet',
-      image: '/favicon.png',
-      stack: 'JavaScript'
-    },
-    {
-      name: '@mypandora/datav',
-      description: '一个基于 Vue 的大屏设计器。',
-      link: 'https://github.com/mypandora/datav',
-      image: '/favicon.png',
-      stack: 'JavaScript, Vue.js'
-    },
-    {
-      name: '@mypandora/form-designer',
-      description: '一个基于 Vue 的表单设计器。',
-      link: 'https://github.com/mypandora/form-designer',
-      image: '/favicon.png',
-      stack: 'JavaScript, Vue.js'
-    }
-  ];
   let components = [
     {
       name: '@mypandora/chat',
@@ -50,6 +27,36 @@
       link: 'https://github.com/mypandora/quarter',
       image: '/favicon.png',
       stack: 'JavaScript, Vue.js, ElementUI'
+    },
+    {
+      name: '@mypandora/element-select',
+      description: '一个基于 Vue 的下拉框单选按钮组件。',
+      link: 'https://github.com/mypandora/element-select',
+      image: '/favicon.png',
+      stack: 'JavaScript, Vue.js, ElementUI'
+    }
+  ];
+  let products = [
+    {
+      name: '@mypandora/spreadsheet',
+      description: '一个基于 canvas 的轻量级报表。',
+      link: 'https://github.com/mypandora/spreadsheet',
+      image: '/favicon.png',
+      stack: 'JavaScript'
+    },
+    {
+      name: '@mypandora/datav',
+      description: '一个基于 Vue 的大屏设计器。',
+      link: 'https://github.com/mypandora/datav',
+      image: '/favicon.png',
+      stack: 'JavaScript, Vue.js'
+    },
+    {
+      name: '@mypandora/form-designer',
+      description: '一个基于 Vue 的表单设计器。',
+      link: 'https://github.com/mypandora/form-designer',
+      image: '/favicon.png',
+      stack: 'JavaScript, Vue.js'
     }
   ];
   let templates = [
@@ -80,8 +87,8 @@
 <section tabindex="-1" class="relative max-w-7xl mx-auto px-4 focus:outline-none sm:px-3 md:px-5 bg-grid-slate-100">
   <h2 class="sr-only">产品</h2>
   <div class="grid grid-cols-1 gap-6 lg:gap-8 sm:grid-cols-2 lg:grid-cols-3" class:max-h-[33rem]={!showMore} class:overflow-hidden={!showMore}>
-    <ul class="space-y-8">
-      {#each products as item}
+    <ul class="space-y-8 hidden sm:block">
+      {#each components as item}
         <li class="text-sm leading-6">
           <figure class="relative flex flex-col-reverse bg-slate-50 rounded-lg p-6 dark:bg-slate-800 dark:highlight-white/5">
             <blockquote class="mt-6 text-slate-700 dark:text-slate-300">
@@ -100,8 +107,8 @@
         </li>
       {/each}
     </ul>
-    <ul class="space-y-8 hidden sm:block">
-      {#each components as item}
+    <ul class="space-y-8">
+      {#each products as item}
         <li class="text-sm leading-6">
           <figure class="relative flex flex-col-reverse bg-slate-50 rounded-lg p-6 dark:bg-slate-800 dark:highlight-white/5">
             <blockquote class="mt-6 text-slate-700 dark:text-slate-300">
