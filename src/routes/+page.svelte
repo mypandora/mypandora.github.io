@@ -2,54 +2,54 @@
   let components = [
     {
       name: '@mypandora/chat',
-      description: '一个基于香草 JavaScript 的聊天组件。',
+      description: '一个基于 Vanilla JavaScript 的聊天组件。',
       link: 'https://github.com/mypandora/chat',
       image: '/favicon.png',
       stack: 'JavaScript'
     },
     {
-      name: '@mypandora/scientific-calculator',
-      description: '一个基于香草 JavaScript 的计算器组件。',
-      link: 'https://github.com/mypandora/scientific-calculator',
+      name: '@mypandora/calculator',
+      description: '一个基于 Vanilla JavaScript 的计算器组件。',
+      link: 'https://github.com/mypandora/calculator',
       image: '/favicon.png',
       stack: 'JavaScript'
     },
-    {
-      name: '@mypandora/layout',
-      description: '一个基于 Vue 的布局组件。',
-      link: 'https://github.com/mypandora/layout',
-      image: '/favicon.png',
-      stack: 'JavaScript, Vue.js'
-    },
-    {
-      name: '@mypandora/quarter',
-      description: '一个基于 Vue 的季度选择器组件。',
-      link: 'https://github.com/mypandora/quarter',
-      image: '/favicon.png',
-      stack: 'JavaScript, Vue.js, ElementUI'
-    },
-    {
-      name: '@mypandora/element-select',
-      description: '一个基于 Vue 的下拉框单选按钮组件。',
-      link: 'https://github.com/mypandora/element-select',
-      image: '/favicon.png',
-      stack: 'JavaScript, Vue.js, ElementUI'
-    }
-  ];
-  let products = [
     {
       name: '@mypandora/spreadsheet',
       description: '一个基于 canvas 的轻量级报表。',
       link: 'https://github.com/mypandora/spreadsheet',
       image: '/favicon.png',
       stack: 'JavaScript'
+    }
+  ];
+  let products = [
+    {
+      name: '@mypandora/element-layout',
+      description: '一个基于 Vue2, element-ui 的布局组件。',
+      link: 'https://github.com/mypandora/element-layout',
+      image: '/favicon.png',
+      stack: 'Vue.js, ElementUI'
+    },
+    {
+      name: '@mypandora/element-quarter',
+      description: '一个基于 Vue2, element-ui 的季度选择器组件。',
+      link: 'https://github.com/mypandora/element-quarter',
+      image: '/favicon.png',
+      stack: 'Vue.js, ElementUI'
+    },
+    {
+      name: '@mypandora/element-select',
+      description: '一个基于 Vue2, element-ui 的下拉框单选按钮组件。',
+      link: 'https://github.com/mypandora/element-select',
+      image: '/favicon.png',
+      stack: 'Vue.js, ElementUI'
     },
     {
       name: '@mypandora/datav',
       description: '一个基于 Vue 的大屏设计器。',
       link: 'https://github.com/mypandora/datav',
       image: '/favicon.png',
-      stack: 'JavaScript, Vue.js'
+      stack: 'Vue.js, ElementUI, Echarts'
     },
     {
       name: '@mypandora/form-designer',
