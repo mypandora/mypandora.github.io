@@ -47,7 +47,7 @@
     {
       name: '社保选择助手',
       description: '一个方便的社保医院选择助手。',
-      link: './hospital',
+      link: 'https://mypandora.cn/hospital',
       image: '/favicon.png',
       stack: 'Nestjs, Svelte,'
     },
