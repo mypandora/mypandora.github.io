@@ -20,9 +20,7 @@
       link: 'https://github.com/mypandora/spreadsheet',
       image: '/favicon.png',
       stack: 'JavaScript'
-    }
-  ];
-  let products = [
+    },
     {
       name: '@mypandora/element-layout',
       description: '一个基于 Vue2, element-ui 的布局组件。',
@@ -31,9 +29,9 @@
       stack: 'Vue.js, ElementUI'
     },
     {
-      name: '@mypandora/element-quarter',
+      name: '@mypandora/element-datepicker',
       description: '一个基于 Vue2, element-ui 的季度选择器组件。',
-      link: 'https://github.com/mypandora/element-quarter',
+      link: 'https://github.com/mypandora/element-datepicker',
       image: '/favicon.png',
       stack: 'Vue.js, ElementUI'
     },
@@ -43,6 +41,15 @@
       link: 'https://github.com/mypandora/element-select',
       image: '/favicon.png',
       stack: 'Vue.js, ElementUI'
+    }
+  ];
+  let products = [
+    {
+      name: '社保选择助手',
+      description: '一个方便的社保医院选择助手。',
+      link: './hospital',
+      image: '/favicon.png',
+      stack: 'Nestjs, Svelte,'
     },
     {
       name: '@mypandora/datav',
