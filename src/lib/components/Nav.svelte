@@ -1,61 +1,11 @@
 <script>
-	import { preventDefault } from 'svelte/legacy';
-
-	import { onMount } from 'svelte';
-	import { goto } from '$app/navigation';
+	import { setMode, mode } from 'mode-watcher';
+	import { Sun, Moon, Monitor, Search, X, EllipsisVertical } from '@lucide/svelte';
 	// import { clickOutside } from '$lib/utils/clickOutside';
-	import Search from '$lib/components/Search.svelte';
-	import Light from '$lib/components/Light.svelte';
-	import Dark from '$lib/components/Dark.svelte';
-	import System from '$lib/components/System.svelte';
-	import Navigation from '$lib/components/Navigation.svelte';
-	import Close from '$lib/components/Close.svelte';
 
-	/** @type {string|undefined} */
-	let theme = $state();
+	/** @type {'light' | 'dark' | 'system'} */
+	let theme = $state('system');
 	let popoverOpen = $state(false);
-
-	onMount(() => {
-		theme = localStorage.getItem('theme') || 'system';
-		doTheme();
-	});
-
-	/**
-	 * Handles changing the theme.
-	 * @param {string} param - The new theme to apply.
-	 * @returns {void}
-	 */
-	function handleChangeTheme(param) {
-		theme = param;
-		if (['light', 'dark'].includes(theme)) {
-			localStorage.setItem('theme', theme);
-		} else {
-			localStorage.removeItem('theme');
-		}
-		doTheme();
-		popoverOpen = false;
-	}
-
-	function doTheme() {
-		if (
-			localStorage.getItem('theme') === 'dark' ||
-			(!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)
-		) {
-			document.documentElement.classList.add('dark');
-		} else {
-			document.documentElement.classList.remove('dark');
-		}
-	}
-
-	/**
-	 * 关闭切换主题弹窗，并跳转到其它页面。
-	 * @param {string} url - 页路路径.
-	 * @returns {void}
-	 */
-	function handleGoto(url) {
-		popoverOpen = false;
-		goto(url);
-	}
 </script>
 
 <header class="relative px-4 sm:px-6 md:px-8">
@@ -80,7 +30,7 @@
 					onclick={() => (popoverOpen = !popoverOpen)}
 				>
 					<span class="sr-only">Navigation</span>
-					<Navigation />
+					<EllipsisVertical />
 				</button>
 
 				{#if popoverOpen}
@@ -96,29 +46,17 @@
 								onclick={() => (popoverOpen = false)}
 							>
 								<span class="sr-only">Close navigation</span>
-								<Close />
+								<X />
 							</button>
 							<ul class="space-y-6">
 								<li>
-									<a
-										class="hover:text-sky-500 dark:hover:text-sky-400"
-										href="/"
-										onclick={preventDefault(() => handleGoto('/'))}>首页</a
-									>
+									<a class="hover:text-sky-500 dark:hover:text-sky-400" href="/">首页</a>
 								</li>
 								<li>
-									<a
-										class="hover:text-sky-500 dark:hover:text-sky-400"
-										href="/product"
-										onclick={preventDefault(() => handleGoto('/product'))}>产品</a
-									>
+									<a class="hover:text-sky-500 dark:hover:text-sky-400" href="/product">产品</a>
 								</li>
 								<li>
-									<a
-										class="hover:text-sky-500 dark:hover:text-sky-400"
-										href="/showcase"
-										onclick={preventDefault(() => handleGoto('/showcase'))}>示例</a
-									>
+									<a class="hover:text-sky-500 dark:hover:text-sky-400" href="/showcase">示例</a>
 								</li>
 							</ul>
 							<div class="mt-6 border-t border-slate-200 pt-6 dark:border-slate-200/10">
@@ -127,13 +65,13 @@
 									<div
 										class="dark:highlight-white/5 relative flex items-center rounded-lg p-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-900/10 dark:bg-slate-600 dark:text-slate-200 dark:ring-0"
 									>
-										{#if theme === 'light'}
-											<Light />
+										{#if mode.current === 'light'}
+											<Sun size={20} />
 										{:else}
-											<Dark />
+											<Moon size={20} />
 										{/if}
 
-										{theme === 'light' ? '浅色' : theme === 'dark' ? '深色' : '自动'}
+										{mode.current === 'light' ? '浅色' : mode.current === 'dark' ? '深色' : '自动'}
 										<svg class="ml-2 h-6 w-6 text-slate-400" fill="none">
 											<path
 												d="m15 11-3 3-3-3"
@@ -144,10 +82,10 @@
 											></path>
 										</svg>
 										<select
-											id="theme"
+											id="mode.current"
 											class="absolute inset-0 h-full w-full appearance-none opacity-0"
 											bind:value={theme}
-											onchange={() => handleChangeTheme(theme || '')}
+											onchange={() => setMode(theme)}
 										>
 											<option value="light">浅色</option>
 											<option value="dark">深色</option>
@@ -181,10 +119,16 @@
 					on:click_outside={() => (popoverOpen = false)} -->
 					<button type="button" onclick={() => (popoverOpen = !popoverOpen)}>
 						<span class="dark:hidden">
-							<Light isSelected={theme === 'light'} />
+							<Sun
+								size={20}
+								class={mode.current === 'light' ? 'stroke-sky-500' : 'stroke-slate-400 dark:stroke-slate-500'}
+							/>
 						</span>
 						<span class="hidden dark:inline">
-							<Dark isSelected={theme === 'dark'} />
+							<Moon
+								size={20}
+								class={mode.current === 'dark' ? 'stroke-sky-500' : 'stroke-slate-400 dark:stroke-slate-500'}
+							/>
 						</span>
 					</button>
 
@@ -193,40 +137,52 @@
 							class="dark:highlight-white/5 absolute top-full right-0 z-50 mt-4 w-36 overflow-hidden rounded-lg bg-white py-1 text-sm font-semibold text-slate-700 shadow-lg ring-1 ring-slate-900/10 dark:bg-slate-800 dark:text-slate-300 dark:ring-0"
 						>
 							<div
-								class={theme === 'light'
+								class={mode.current === 'light'
 									? 'flex cursor-pointer items-center bg-slate-50 px-2 py-1 text-sky-500 hover:bg-slate-50 dark:bg-slate-600/30 hover:dark:bg-slate-600/30'
 									: 'flex cursor-pointer items-center px-2 py-1 hover:bg-slate-50 hover:dark:bg-slate-600/30'}
-								onclick={() => handleChangeTheme('light')}
-								onkeydown={() => handleChangeTheme('light')}
+								onclick={() => setMode('light')}
+								onkeydown={() => setMode('light')}
 								tabindex="-1"
 								role="option"
-								aria-selected={theme === 'light'}
+								aria-selected={mode.current === 'light'}
 							>
-								<Light isSelected={theme === 'light'} />浅色
+								<Sun
+									size={20}
+									class={mode.current === 'light' ? 'stroke-sky-500' : 'stroke-slate-400 dark:stroke-slate-500'}
+								/>
+								浅色
 							</div>
 							<div
-								class={theme === 'dark'
+								class={mode.current === 'dark'
 									? 'flex cursor-pointer items-center bg-slate-50 px-2 py-1 text-sky-500 hover:bg-slate-50 dark:bg-slate-600/30 hover:dark:bg-slate-600/30'
 									: 'flex cursor-pointer items-center px-2 py-1 hover:bg-slate-50 hover:dark:bg-slate-600/30'}
-								onclick={() => handleChangeTheme('dark')}
-								onkeydown={() => handleChangeTheme('dark')}
+								onclick={() => setMode('dark')}
+								onkeydown={() => setMode('dark')}
 								tabindex="-1"
 								role="option"
-								aria-selected={theme === 'dark'}
+								aria-selected={mode.current === 'dark'}
 							>
-								<Dark isSelected={theme === 'dark'} />深色
+								<Moon
+									size={20}
+									class={mode.current === 'dark' ? 'stroke-sky-500' : 'stroke-slate-400 dark:stroke-slate-500'}
+								/>
+								深色
 							</div>
 							<div
-								class={theme === 'system'
+								class={mode.current == null
 									? 'flex cursor-pointer items-center bg-slate-50 px-2 py-1 text-sky-500 hover:bg-slate-50 dark:bg-slate-600/30 hover:dark:bg-slate-600/30'
 									: 'flex cursor-pointer items-center px-2 py-1 hover:bg-slate-50 hover:dark:bg-slate-600/30'}
-								onclick={preventDefault(() => handleChangeTheme('system'))}
-								onkeydown={() => handleChangeTheme('system')}
+								onclick={() => setMode('system')}
+								onkeydown={() => setMode('system')}
 								tabindex="-1"
 								role="option"
-								aria-selected={theme === 'system'}
+								aria-selected={mode.current == null}
 							>
-								<System isSelected={theme === 'system'} />自动
+								<Monitor
+									size={20}
+									class={mode.current == null ? 'stroke-sky-500' : 'stroke-slate-400 dark:stroke-slate-500'}
+								/>
+								自动
 							</div>
 						</div>
 					{/if}
