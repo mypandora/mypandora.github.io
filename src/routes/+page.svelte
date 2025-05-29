@@ -75,7 +75,7 @@
       stack: 'JavaScript'
     }
   ];
-  let showMore = false;
+  let showMore = $state(false);
 </script>
 
 <div
@@ -164,7 +164,7 @@
     class:opacity-100={showMore}
   >
     <button
-      on:click={() => (showMore = !showMore)}
+      onclick={() => (showMore = !showMore)}
       type="button"
       class="relative bg-slate-900 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 text-sm text-white font-semibold h-12 px-6 rounded-lg flex items-center dark:bg-slate-700 dark:hover:bg-slate-600 pointer-events-auto"
       >{showMore ? '收起' : '显示更多'}</button

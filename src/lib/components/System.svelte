@@ -1,5 +1,6 @@
 <script>
-  export let isSelected;
+  /** @type {{isSelected: any}} */
+  let { isSelected } = $props();
 </script>
 
 <svg viewBox="0 0 24 24" fill="none" class="w-6 h-6 mr-2">

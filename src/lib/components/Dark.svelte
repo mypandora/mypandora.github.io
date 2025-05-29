@@ -1,6 +1,7 @@
 <script>
-  /** @type {boolean} */
-  export let isSelected = false;
+  
+  /** @type {{isSelected?: boolean}} */
+  let { isSelected = false } = $props();
 </script>
 
 <svg viewBox="0 0 24 24" fill="none" class="w-6 h-6 mr-2">

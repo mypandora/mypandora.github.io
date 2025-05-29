@@ -1,4 +1,6 @@
 <script>
+  import { preventDefault } from 'svelte/legacy';
+
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
   // import { clickOutside } from '$lib/utils/clickOutside';
@@ -10,8 +12,8 @@
   import Close from '$lib/components/Close.svelte';
 
   /** @type {string|undefined} */
-  let theme;
-  let popoverOpen = false;
+  let theme = $state();
+  let popoverOpen = $state(false);
 
   onMount(() => {
     theme = localStorage.getItem('theme') || 'system';
@@ -67,7 +69,7 @@
         <button
           type="button"
           class="text-slate-500 w-8 h-8 flex items-center justify-center hover:text-slate-600 dark:text-slate-400 dark:hover:text-slate-300"
-          on:click={() => (popoverOpen = !popoverOpen)}
+          onclick={() => (popoverOpen = !popoverOpen)}
         >
           <span class="sr-only">Navigation</span>
           <Navigation />
@@ -81,20 +83,20 @@
               <button
                 type="button"
                 class="absolute top-5 right-5 w-8 h-8 flex items-center justify-center text-slate-500 hover:text-slate-600 dark:text-slate-400 dark:hover:text-slate-300"
-                on:click={() => (popoverOpen = false)}
+                onclick={() => (popoverOpen = false)}
               >
                 <span class="sr-only">Close navigation</span>
                 <Close />
               </button>
               <ul class="space-y-6">
                 <li>
-                  <a class="hover:text-sky-500 dark:hover:text-sky-400" href="/" on:click|preventDefault={() => handleGoto('/')}>首页</a>
+                  <a class="hover:text-sky-500 dark:hover:text-sky-400" href="/" onclick={preventDefault(() => handleGoto('/'))}>首页</a>
                 </li>
                 <li>
-                  <a class="hover:text-sky-500 dark:hover:text-sky-400" href="/product" on:click|preventDefault={() => handleGoto('/product')}>产品</a>
+                  <a class="hover:text-sky-500 dark:hover:text-sky-400" href="/product" onclick={preventDefault(() => handleGoto('/product'))}>产品</a>
                 </li>
                 <li>
-                  <a class="hover:text-sky-500 dark:hover:text-sky-400" href="/showcase" on:click|preventDefault={() => handleGoto('/showcase')}>示例</a>
+                  <a class="hover:text-sky-500 dark:hover:text-sky-400" href="/showcase" onclick={preventDefault(() => handleGoto('/showcase'))}>示例</a>
                 </li>
               </ul>
               <div class="mt-6 pt-6 border-t border-slate-200 dark:border-slate-200/10">
@@ -104,16 +106,16 @@
                     class="relative flex items-center ring-1 ring-slate-900/10 rounded-lg shadow-sm p-2 text-slate-700 font-semibold dark:bg-slate-600 dark:ring-0 dark:highlight-white/5 dark:text-slate-200"
                   >
                     {#if theme === 'light'}
-                      <svelte:component this={Light} />
+                      <Light />
                     {:else}
-                      <svelte:component this={Dark} />
+                      <Dark />
                     {/if}
 
                     {theme === 'light' ? '浅色' : theme === 'dark' ? '深色' : '自动'}
                     <svg class="w-6 h-6 ml-2 text-slate-400" fill="none">
                       <path d="m15 11-3 3-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                     </svg>
-                    <select id="theme" class="absolute appearance-none inset-0 w-full h-full opacity-0" bind:value={theme} on:change={() => handleChangeTheme(theme || '')}>
+                    <select id="theme" class="absolute appearance-none inset-0 w-full h-full opacity-0" bind:value={theme} onchange={() => handleChangeTheme(theme || '')}>
                       <option value="light">浅色</option>
                       <option value="dark">深色</option>
                       <option value="system">自动</option>
@@ -144,12 +146,12 @@
         <div class="flex items-center border-l border-slate-200 ml-6 pl-6 dark:border-slate-800">
           <!-- use:clickOutside
 					on:click_outside={() => (popoverOpen = false)} -->
-          <button type="button" on:click={() => (popoverOpen = !popoverOpen)}>
+          <button type="button" onclick={() => (popoverOpen = !popoverOpen)}>
             <span class="dark:hidden">
-              <svelte:component this={Light} isSelected={theme === 'light'} />
+              <Light isSelected={theme === 'light'} />
             </span>
             <span class="hidden dark:inline">
-              <svelte:component this={Dark} isSelected={theme === 'dark'} />
+              <Dark isSelected={theme === 'dark'} />
             </span>
           </button>
 
@@ -161,8 +163,8 @@
                 class={theme === 'light'
                   ? 'py-1 px-2 flex items-center cursor-pointer hover:bg-slate-50 hover:dark:bg-slate-600/30 bg-slate-50 dark:bg-slate-600/30 text-sky-500'
                   : 'py-1 px-2 flex items-center cursor-pointer hover:bg-slate-50 hover:dark:bg-slate-600/30'}
-                on:click={() => handleChangeTheme('light')}
-                on:keydown={() => handleChangeTheme('light')}
+                onclick={() => handleChangeTheme('light')}
+                onkeydown={() => handleChangeTheme('light')}
                 tabindex="-1"
                 role="option"
                 aria-selected={theme === 'light'}
@@ -173,8 +175,8 @@
                 class={theme === 'dark'
                   ? 'py-1 px-2 flex items-center cursor-pointer hover:bg-slate-50 hover:dark:bg-slate-600/30 bg-slate-50 dark:bg-slate-600/30 text-sky-500'
                   : 'py-1 px-2 flex items-center cursor-pointer hover:bg-slate-50 hover:dark:bg-slate-600/30'}
-                on:click={() => handleChangeTheme('dark')}
-                on:keydown={() => handleChangeTheme('dark')}
+                onclick={() => handleChangeTheme('dark')}
+                onkeydown={() => handleChangeTheme('dark')}
                 tabindex="-1"
                 role="option"
                 aria-selected={theme === 'dark'}
@@ -185,8 +187,8 @@
                 class={theme === 'system'
                   ? 'py-1 px-2 flex items-center cursor-pointer hover:bg-slate-50 hover:dark:bg-slate-600/30 bg-slate-50 dark:bg-slate-600/30 text-sky-500'
                   : 'py-1 px-2 flex items-center cursor-pointer hover:bg-slate-50 hover:dark:bg-slate-600/30'}
-                on:click|preventDefault={() => handleChangeTheme('system')}
-                on:keydown={() => handleChangeTheme('system')}
+                onclick={preventDefault(() => handleChangeTheme('system'))}
+                onkeydown={() => handleChangeTheme('system')}
                 tabindex="-1"
                 role="option"
                 aria-selected={theme === 'system'}
