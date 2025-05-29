@@ -1,11 +1,21 @@
 <script>
-	import { setMode, mode } from 'mode-watcher';
+	import { setMode, mode, userPrefersMode } from 'mode-watcher';
 	import { Sun, Moon, Monitor, Search, X, EllipsisVertical } from '@lucide/svelte';
 	// import { clickOutside } from '$lib/utils/clickOutside';
 
 	/** @type {'light' | 'dark' | 'system'} */
 	let theme = $state('system');
 	let popoverOpen = $state(false);
+
+	/**
+	 * @param {'light' | 'dark' |'system'} theme
+	 */
+	function changeTheme(theme) {
+		popoverOpen = !popoverOpen;
+		setMode(theme);
+	}
+
+	$inspect(userPrefersMode.current)
 </script>
 
 <header class="relative px-4 sm:px-6 md:px-8">
@@ -71,7 +81,7 @@
 											<Moon size={20} />
 										{/if}
 
-										{mode.current === 'light' ? '浅色' : mode.current === 'dark' ? '深色' : '自动'}
+										{userPrefersMode.current === 'light' ? '浅色' : userPrefersMode.current === 'dark' ? '深色' : '自动'}
 										<svg class="ml-2 h-6 w-6 text-slate-400" fill="none">
 											<path
 												d="m15 11-3 3-3-3"
@@ -137,50 +147,52 @@
 							class="dark:highlight-white/5 absolute top-full right-0 z-50 mt-4 w-36 overflow-hidden rounded-lg bg-white py-1 text-sm font-semibold text-slate-700 shadow-lg ring-1 ring-slate-900/10 dark:bg-slate-800 dark:text-slate-300 dark:ring-0"
 						>
 							<div
-								class={mode.current === 'light'
+								class={userPrefersMode.current === 'light'
 									? 'flex cursor-pointer items-center bg-slate-50 px-2 py-1 text-sky-500 hover:bg-slate-50 dark:bg-slate-600/30 hover:dark:bg-slate-600/30'
 									: 'flex cursor-pointer items-center px-2 py-1 hover:bg-slate-50 hover:dark:bg-slate-600/30'}
-								onclick={() => setMode('light')}
-								onkeydown={() => setMode('light')}
+								onclick={() => changeTheme('light')}
+								onkeydown={() => changeTheme('light')}
 								tabindex="-1"
 								role="option"
-								aria-selected={mode.current === 'light'}
+								aria-selected={userPrefersMode.current === 'light'}
 							>
 								<Sun
 									size={20}
-									class={mode.current === 'light' ? 'stroke-sky-500' : 'stroke-slate-400 dark:stroke-slate-500'}
+									class={userPrefersMode.current === 'light' ? 'stroke-sky-500' : 'stroke-slate-400 dark:stroke-slate-500'}
 								/>
 								浅色
 							</div>
 							<div
-								class={mode.current === 'dark'
+								class={userPrefersMode.current === 'dark'
 									? 'flex cursor-pointer items-center bg-slate-50 px-2 py-1 text-sky-500 hover:bg-slate-50 dark:bg-slate-600/30 hover:dark:bg-slate-600/30'
 									: 'flex cursor-pointer items-center px-2 py-1 hover:bg-slate-50 hover:dark:bg-slate-600/30'}
-								onclick={() => setMode('dark')}
-								onkeydown={() => setMode('dark')}
+								onclick={() => changeTheme('dark')}
+								onkeydown={() => changeTheme('dark')}
 								tabindex="-1"
 								role="option"
-								aria-selected={mode.current === 'dark'}
+								aria-selected={userPrefersMode.current === 'dark'}
 							>
 								<Moon
 									size={20}
-									class={mode.current === 'dark' ? 'stroke-sky-500' : 'stroke-slate-400 dark:stroke-slate-500'}
+									class={userPrefersMode.current === 'dark' ? 'stroke-sky-500' : 'stroke-slate-400 dark:stroke-slate-500'}
 								/>
 								深色
 							</div>
 							<div
-								class={mode.current == null
+								class={userPrefersMode.current === 'system'
 									? 'flex cursor-pointer items-center bg-slate-50 px-2 py-1 text-sky-500 hover:bg-slate-50 dark:bg-slate-600/30 hover:dark:bg-slate-600/30'
 									: 'flex cursor-pointer items-center px-2 py-1 hover:bg-slate-50 hover:dark:bg-slate-600/30'}
-								onclick={() => setMode('system')}
-								onkeydown={() => setMode('system')}
+								onclick={() => changeTheme('system')}
+								onkeydown={() => changeTheme('system')}
 								tabindex="-1"
 								role="option"
-								aria-selected={mode.current == null}
+								aria-selected={userPrefersMode.current === 'system'}
 							>
 								<Monitor
 									size={20}
-									class={mode.current == null ? 'stroke-sky-500' : 'stroke-slate-400 dark:stroke-slate-500'}
+									class={userPrefersMode.current === 'system'
+										? 'stroke-sky-500'
+										: 'stroke-slate-400 dark:stroke-slate-500'}
 								/>
 								自动
 							</div>
