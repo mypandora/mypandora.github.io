@@ -15,7 +15,7 @@
 		setMode(theme);
 	}
 
-	$inspect(userPrefersMode.current)
+	$inspect(userPrefersMode.current);
 </script>
 
 <header class="relative px-4 sm:px-6 md:px-8">
@@ -81,7 +81,11 @@
 											<Moon size={20} />
 										{/if}
 
-										{userPrefersMode.current === 'light' ? '浅色' : userPrefersMode.current === 'dark' ? '深色' : '自动'}
+										{userPrefersMode.current === 'light'
+											? '浅色'
+											: userPrefersMode.current === 'dark'
+												? '深色'
+												: '自动'}
 										<svg class="ml-2 h-6 w-6 text-slate-400" fill="none">
 											<path
 												d="m15 11-3 3-3-3"
@@ -158,7 +162,9 @@
 							>
 								<Sun
 									size={20}
-									class={userPrefersMode.current === 'light' ? 'stroke-sky-500' : 'stroke-slate-400 dark:stroke-slate-500'}
+									class={userPrefersMode.current === 'light'
+										? 'stroke-sky-500'
+										: 'stroke-slate-400 dark:stroke-slate-500'}
 								/>
 								浅色
 							</div>
@@ -174,7 +180,9 @@
 							>
 								<Moon
 									size={20}
-									class={userPrefersMode.current === 'dark' ? 'stroke-sky-500' : 'stroke-slate-400 dark:stroke-slate-500'}
+									class={userPrefersMode.current === 'dark'
+										? 'stroke-sky-500'
+										: 'stroke-slate-400 dark:stroke-slate-500'}
 								/>
 								深色
 							</div>
