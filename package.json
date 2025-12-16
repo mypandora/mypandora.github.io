@@ -1,19 +1,45 @@
 {
-  "name": "mypandora.github.io",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
-    "docs:serve": "vitepress serve docs"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "sass": "^1.54.4",
-    "vitepress": "1.0.0-alpha.64",
-    "vue": "^3.2.37"
-  }
+	"name": "mypandora",
+	"private": true,
+	"version": "0.0.1",
+	"type": "module",
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build",
+		"preview": "vite preview",
+		"prepare": "svelte-kit sync || echo ''",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch",
+		"format": "prettier --write .",
+		"lint": "prettier --check . && eslint ."
+	},
+	"dependencies": {
+		"@lucide/svelte": "^0.561.0",
+		"mode-watcher": "^1.1.0"
+	},
+	"devDependencies": {
+		"@eslint/compat": "^1.4.1",
+		"@eslint/js": "^9.39.2",
+		"@sveltejs/adapter-cloudflare": "^7.2.4",
+		"@sveltejs/kit": "^2.49.2",
+		"@sveltejs/vite-plugin-svelte": "^6.2.1",
+		"@tailwindcss/vite": "^4.1.18",
+		"@types/node": "^24.10.4",
+		"eslint": "^9.39.2",
+		"eslint-config-prettier": "^10.1.8",
+		"eslint-plugin-svelte": "^3.13.1",
+		"globals": "^16.5.0",
+		"prettier": "^3.7.4",
+		"prettier-plugin-svelte": "^3.4.1",
+		"prettier-plugin-tailwindcss": "^0.7.2",
+		"svelte": "^5.46.0",
+		"svelte-check": "^4.3.4",
+		"tailwindcss": "^4.1.18",
+		"typescript": "^5.9.3",
+		"vite": "^7.3.0",
+		"vite-plugin-devtools-json": "^1.0.0"
+	},
+	"volta": {
+		"node": "24.11.1"
+	}
 }
