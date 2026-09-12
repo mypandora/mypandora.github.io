@@ -18,19 +18,19 @@
 
 ## 用户决策(已确认)
 
-| 决策点 | 选择 |
-| --- | --- |
-| 浏览方式 | 列表(网格)+ 点击打开大图(灯箱) |
-| 页面位置 | mypandora 新增路由 `/uniform` |
-| 图片存放 | 下载 180 张到 `static/uniform/` 随代码部署入库 |
-| 方案标识 | 只用编号,沿用原站风格 |
-| 实现方案 | 方案 A:单页 + Tab + 网格 + 灯箱,零运行时请求 |
+| 决策点   | 选择                                                                                  |
+| -------- | ------------------------------------------------------------------------------------- |
+| 浏览方式 | 列表(网格)+ 点击打开大图(灯箱)                                                        |
+| 页面位置 | mypandora 新增路由 `/uniform`                                                         |
+| 图片存放 | 下载 180 张到 `static/assets/uniform/` 随代码部署入库(避免与 `/uniform` 路由同名冲突) |
+| 方案标识 | 只用编号,沿用原站风格                                                                 |
+| 实现方案 | 方案 A:单页 + Tab + 网格 + 灯箱,零运行时请求                                          |
 
 ## 架构
 
 - 路由:`src/routes/uniform/+page.svelte`(单页,客户端可交互,adapter-static 预渲染)
 - 数据:`src/lib/data/uniforms.js` 构建期静态导出三个类别的方案列表,无运行时 fetch
-- 图片:`static/uniform/{primary|junior|senior}/{A1..C15}/1..4.webp`
+- 图片:`static/assets/uniform/{primary|junior|senior}/{A1..C15}/1..4.webp`,访问路径 `/assets/uniform/...`(选该前缀是为避免静态目录与 `/uniform` 路由重名,静态托管按目录优先解析时 404)
 - 方案编码:小学=A、初中=B、高中=C,编号 1~15
 
 ## 页面结构与交互
@@ -59,7 +59,7 @@
 
 ## 下载步骤
 
-1. 按 `static/uniform/{category}/{code}/{n}.webp` 目录结构下载全部 180 张图
+1. 按 `static/assets/uniform/{category}/{code}/{n}.webp` 目录结构下载全部 180 张图
 2. 下载后校验数量与完整性(180 files,每张非空)
 
 ## 验证

@@ -45,11 +45,7 @@
 	aria-label="{categoryName}编号{school.code}方案"
 	tabindex="-1"
 >
-	<button
-		type="button"
-		aria-label="关闭"
-		class="absolute inset-0 z-0 cursor-default bg-transparent"
-		onclick={onClose}
+	<button type="button" aria-label="关闭" class="absolute inset-0 z-0 cursor-default bg-transparent" onclick={onClose}
 	></button>
 
 	<div class="relative z-10 mx-auto flex h-full w-full max-w-5xl flex-col">
