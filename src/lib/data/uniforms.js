@@ -6,6 +6,8 @@ export const CATEGORIES = [
 
 /** @typedef {{ code: string, category: string, images: string[] }} UniformSchool */
 
+const IMG_CDN = 'https://img.mypandora.cn';
+
 /**
  * @param {{ key: string, letter: string }} category
  * @returns {UniformSchool[]}
@@ -16,7 +18,7 @@ function buildSchools(category) {
 		return {
 			code,
 			category: category.key,
-			images: [1, 2, 3, 4].map((n) => `/assets/uniform/${category.key}/${code}/${n}.webp`)
+			images: [1, 2, 3, 4].map((n) => `${IMG_CDN}/${category.key}/${code}/${n}.webp`)
 		};
 	});
 }

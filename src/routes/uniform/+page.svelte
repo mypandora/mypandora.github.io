@@ -12,6 +12,7 @@
 <svelte:head>
 	<title>石家庄市校服展示</title>
 	<meta name="description" content="石家庄市中小学生校服方案展示" />
+	<link rel="preconnect" href="https://img.mypandora.cn" crossorigin="anonymous" />
 </svelte:head>
 
 <section class="mx-auto max-w-7xl px-4 pt-12 pb-16 sm:px-6 md:px-8">
@@ -52,7 +53,7 @@
 					alt="{activeInfo.name}编号{school.code}"
 					loading="lazy"
 					decoding="async"
-					class="aspect-[3/2] w-full object-cover"
+					class="aspect-3/2 w-full object-cover"
 				/>
 				<div class="px-3 py-2 text-sm font-semibold text-slate-900 dark:text-slate-200">
 					编号 {school.code}

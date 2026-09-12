@@ -18,19 +18,19 @@
 
 ## 用户决策(已确认)
 
-| 决策点   | 选择                                                                                  |
-| -------- | ------------------------------------------------------------------------------------- |
-| 浏览方式 | 列表(网格)+ 点击打开大图(灯箱)                                                        |
-| 页面位置 | mypandora 新增路由 `/uniform`                                                         |
-| 图片存放 | 下载 180 张到 `static/assets/uniform/` 随代码部署入库(避免与 `/uniform` 路由同名冲突) |
-| 方案标识 | 只用编号,沿用原站风格                                                                 |
-| 实现方案 | 方案 A:单页 + Tab + 网格 + 灯箱,零运行时请求                                          |
+| 决策点   | 选择                                                                 |
+| -------- | -------------------------------------------------------------------- |
+| 浏览方式 | 列表(网格)+ 点击打开大图(灯箱)                                       |
+| 页面位置 | mypandora 新增路由 `/uniform`                                        |
+| 图片存放 | 已上传至 CDN `https://img.mypandora.cn/`,运行时直连 CDN,不随仓库打包 |
+| 方案标识 | 只用编号,沿用原站风格                                                |
+| 实现方案 | 方案 A:单页 + Tab + 网格 + 灯箱,零运行时请求                         |
 
 ## 架构
 
 - 路由:`src/routes/uniform/+page.svelte`(单页,客户端可交互,adapter-static 预渲染)
 - 数据:`src/lib/data/uniforms.js` 构建期静态导出三个类别的方案列表,无运行时 fetch
-- 图片:`static/assets/uniform/{primary|junior|senior}/{A1..C15}/1..4.webp`,访问路径 `/assets/uniform/...`(选该前缀是为避免静态目录与 `/uniform` 路由重名,静态托管按目录优先解析时 404)
+- 图片:CDN `https://img.mypandora.cn/{primary|junior|senior}/{A1..C15}/1..4.webp`(运行时直连,首屏已 `preconnect`;`static/` 内不再存放校服图,仓库体积约减 24MB)
 - 方案编码:小学=A、初中=B、高中=C,编号 1~15
 
 ## 页面结构与交互(移动优先)
@@ -58,10 +58,10 @@
 - 路由元信息设置 `title` / `description`
 - 图片缺失时浏览器按常规显示占位(不额外处理,数据已全量校验存在)
 
-## 下载步骤
+## 下载步骤(已完成,图片已转存 CDN)
 
-1. 按 `static/assets/uniform/{category}/{code}/{n}.webp` 目录结构下载全部 180 张图
-2. 下载后校验数量与完整性(180 files,每张非空)
+1. 已按 `{category}/{code}/{n}.webp` 从 COS 全量下载 180 张并校验(180 files,每张非空)
+2. 已全部上传至 `https://img.mypandora.cn/`,仓库内 `static/assets/uniform/` 已删除
 
 ## 验证
 
