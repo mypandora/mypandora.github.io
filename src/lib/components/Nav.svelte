@@ -63,6 +63,9 @@
 									<a class="hover:text-sky-500 dark:hover:text-sky-400" href="/">首页</a>
 								</li>
 								<li>
+									<a class="hover:text-sky-500 dark:hover:text-sky-400" href="/uniform">校服</a>
+								</li>
+								<li>
 									<a class="hover:text-sky-500 dark:hover:text-sky-400" href="/product">产品</a>
 								</li>
 								<li>
@@ -118,6 +121,9 @@
 					<ul class="flex items-center gap-x-8">
 						<li>
 							<a href="/" class="hover:text-sky-500 dark:hover:text-sky-400">首页</a>
+						</li>
+						<li>
+							<a href="/uniform" class="hover:text-sky-500 dark:hover:text-sky-400">校服</a>
 						</li>
 						<li>
 							<a href="/product" class="hover:text-sky-500 dark:hover:text-sky-400">产品</a>
