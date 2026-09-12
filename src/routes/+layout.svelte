@@ -18,6 +18,6 @@
 
 <Nav />
 
-<main>
+<main class="pb-16 md:pb-0">
 	{@render children?.()}
 </main>

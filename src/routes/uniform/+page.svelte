@@ -19,7 +19,7 @@
 	<p class="mt-2 text-slate-600 dark:text-slate-400">石家庄市中小学生校服方案展示</p>
 
 	<div
-		class="sticky top-0 z-30 -mx-4 mt-8 border-b border-slate-200/60 bg-slate-50/95 px-4 py-3 backdrop-blur sm:-mx-6 sm:px-6 md:-mx-8 md:px-8 dark:border-slate-800 dark:bg-slate-900/90"
+		class="sticky top-14 z-30 -mx-4 mt-8 border-b border-slate-200/60 bg-slate-50/95 px-4 py-3 backdrop-blur sm:-mx-6 sm:px-6 md:top-16 md:-mx-8 md:px-8 dark:border-slate-800 dark:bg-slate-900/90"
 	>
 		<div class="flex gap-3" role="tablist" aria-label="校服类别">
 			{#each UNIFORMS as cat (cat.key)}

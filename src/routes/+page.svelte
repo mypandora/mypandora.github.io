@@ -1,233 +1,150 @@
 <script>
-	let components = [
-		{
-			name: '@mypandora/chat',
-			description: '一个基于 Vanilla JavaScript 的聊天组件。',
-			link: 'https://github.com/mypandora/chat',
-			image: '/favicon.png',
-			stack: 'JavaScript'
-		},
-		{
-			name: '@mypandora/calculator',
-			description: '一个基于 Vanilla JavaScript 的计算器组件。',
-			link: 'https://github.com/mypandora/calculator',
-			image: '/favicon.png',
-			stack: 'JavaScript'
-		},
-		{
-			name: '@mypandora/spreadsheet',
-			description: '一个基于 canvas 的轻量级报表。',
-			link: 'https://github.com/mypandora/spreadsheet',
-			image: '/favicon.png',
-			stack: 'JavaScript'
-		},
-		{
-			name: '@mypandora/element-layout',
-			description: '一个基于 Vue2, element-ui 的布局组件。',
-			link: 'https://github.com/mypandora/element-layout',
-			image: '/favicon.png',
-			stack: 'Vue.js, ElementUI'
-		},
-		{
-			name: '@mypandora/element-datepicker',
-			description: '一个基于 Vue2, element-ui 的季度选择器组件。',
-			link: 'https://github.com/mypandora/element-datepicker',
-			image: '/favicon.png',
-			stack: 'Vue.js, ElementUI'
-		},
-		{
-			name: '@mypandora/element-select',
-			description: '一个基于 Vue2, element-ui 的下拉框单选按钮组件。',
-			link: 'https://github.com/mypandora/element-select',
-			image: '/favicon.png',
-			stack: 'Vue.js, ElementUI'
-		}
-	];
-	let products = [
-		{
-			name: '社保选择助手',
-			description: '一个方便的社保医院选择助手。',
-			link: 'https://myhospital.mypandora.cn/',
-			image: '/favicon.png',
-			stack: 'Nestjs, Svelte,'
-		},
-		{
-			name: '@mypandora/datav',
-			description: '一个基于 Vue 的大屏设计器。',
-			link: 'https://github.com/mypandora/datav',
-			image: '/favicon.png',
-			stack: 'Vue.js, ElementUI, Echarts'
-		},
-		{
-			name: '@mypandora/form-designer',
-			description: '一个基于 Vue 的表单设计器。',
-			link: 'https://github.com/mypandora/form-designer',
-			image: '/favicon.png',
-			stack: 'JavaScript, Vue.js'
-		}
-	];
-	let templates = [
-		{
-			name: '模板示例1',
-			description: '这是支持 PC、移动端，且支持暗黑模式的模板示例。',
-			link: '',
-			image: '/favicon.png',
-			stack: 'JavaScript'
-		}
-	];
-	let showMore = $state(false);
+	import { resolve } from '$app/paths';
+	import ProjectCard from '$lib/components/site/ProjectCard.svelte';
+	import { components, products, templates } from '$lib/data/projects';
 </script>
 
-<div
-	class="foo mb-20 overflow-hidden sm:mb-32 md:mb-40"
-	style="mask-image: linear-gradient(to bottom, transparent, black);
--webkit-mask-image: linear-gradient(to bottom, transparent, black);"
->
-	<div class="relative mx-auto max-w-5xl pt-20 sm:pt-24 lg:pt-32">
-		<h1
-			class="text-center text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl dark:text-white"
-		>
-			帮助你快速构建现代网站
-		</h1>
-		<p class="mx-auto mt-6 max-w-3xl text-center text-lg text-slate-600 dark:text-slate-400">
-			提供各种有用的工具，包括：报表工具、大屏设计器、表单设计器、聊天组件、计算器组件、布局组件、季度选择器组件等等。
-		</p>
-	</div>
-</div>
+<svelte:head>
+	<title>mypandora — 帮助你快速构建现代网站</title>
+	<meta
+		name="description"
+		content="mypandora:开源组件与在线工具集合 — 报表、大屏设计器、表单设计器、聊天组件等,帮助你快速构建现代网站。"
+	/>
+</svelte:head>
 
-<section tabindex="-1" class="bg-grid-slate-100 relative mx-auto max-w-7xl px-4 focus:outline-none sm:px-3 md:px-5">
-	<h2 class="sr-only">产品</h2>
+<section class="hero-grid relative overflow-hidden">
 	<div
-		class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8"
-		class:max-h-[33rem]={!showMore}
-		class:overflow-hidden={!showMore}
-	>
-		<ul class="hidden space-y-8 sm:block">
-			{#each components as item (item.name)}
-				<li class="text-sm leading-6">
-					<figure
-						class="dark:highlight-white/5 relative flex flex-col-reverse rounded-lg bg-slate-50 p-6 dark:bg-slate-800"
-					>
-						<blockquote class="mt-6 text-slate-700 dark:text-slate-300">
-							<p>{item.description}</p>
-						</blockquote>
-						<figcaption class="flex items-center space-x-4">
-							<img
-								src={item.image}
-								alt=""
-								class="h-14 w-14 flex-none rounded-full object-cover"
-								loading="lazy"
-								decoding="async"
-							/>
-							<div class="flex-auto">
-								<div class="text-base font-semibold text-slate-900 dark:text-slate-300">
-									<a href={item.link} rel="external" tabindex="0"><span class="absolute inset-0"></span>{item.name}</a>
-								</div>
-								<div class="mt-0.5">{item.stack}</div>
-							</div>
-						</figcaption>
-					</figure>
-				</li>
-			{/each}
-		</ul>
-		<ul class="space-y-8">
-			{#each products as item (item.name)}
-				<li class="text-sm leading-6">
-					<figure
-						class="dark:highlight-white/5 relative flex flex-col-reverse rounded-lg bg-slate-50 p-6 dark:bg-slate-800"
-					>
-						<blockquote class="mt-6 text-slate-700 dark:text-slate-300">
-							<p>{item.description}</p>
-						</blockquote>
-						<figcaption class="flex items-center space-x-4">
-							<img
-								src={item.image}
-								alt=""
-								class="h-14 w-14 flex-none rounded-full object-cover"
-								loading="lazy"
-								decoding="async"
-							/>
-							<div class="flex-auto">
-								<div class="text-base font-semibold text-slate-900 dark:text-slate-300">
-									<a href={item.link} rel="external" tabindex="0"><span class="absolute inset-0"></span>{item.name}</a>
-								</div>
-								<div class="mt-0.5">{item.stack}</div>
-							</div>
-						</figcaption>
-					</figure>
-				</li>
-			{/each}
-		</ul>
-		<ul class="hidden space-y-8 lg:block">
-			{#each templates as item (item.name)}
-				<li class="text-sm leading-6">
-					<figure
-						class="dark:highlight-white/5 relative flex flex-col-reverse rounded-lg bg-slate-50 p-6 dark:bg-slate-800"
-					>
-						<blockquote class="mt-6 text-slate-700 dark:text-slate-300">
-							<p>{item.description}</p>
-						</blockquote>
-						<figcaption class="flex items-center space-x-4">
-							<img
-								src={item.image}
-								alt=""
-								class="h-14 w-14 flex-none rounded-full object-cover"
-								loading="lazy"
-								decoding="async"
-							/>
-							<div class="flex-auto">
-								<div class="text-base font-semibold text-slate-900 dark:text-slate-300">
-									<a href={item.link} rel="external" tabindex="0"><span class="absolute inset-0"></span>{item.name}</a>
-								</div>
-								<div class="mt-0.5">{item.stack}</div>
-							</div>
-						</figcaption>
-					</figure>
-				</li>
-			{/each}
-		</ul>
-	</div>
-	<div
-		class="pointer-events-none absolute inset-x-0 bottom-0 flex justify-center bg-gradient-to-t from-white pt-32 pb-8 dark:from-slate-900"
-		class:sticky={showMore}
-		class:-mt-52={showMore}
-		class:transition-opacity={showMore}
-		class:duration-300={showMore}
-		class:opacity-100={showMore}
-	>
-		<button
-			onclick={() => (showMore = !showMore)}
-			type="button"
-			class="pointer-events-auto relative flex h-12 items-center rounded-lg bg-slate-900 px-6 text-sm font-semibold text-white hover:bg-slate-700 focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:outline-none dark:bg-slate-700 dark:hover:bg-slate-600"
-			>{showMore ? '收起' : '显示更多'}</button
+		class="pointer-events-none absolute inset-0 bg-[radial-gradient(60rem_30rem_at_50%_-10%,rgba(21,88,166,0.12),transparent)]"
+	></div>
+	<div class="relative mx-auto max-w-7xl px-4 pt-16 pb-14 text-center sm:px-6 sm:pt-24 sm:pb-20">
+		<span
+			class="inline-flex items-center rounded-full border border-slate-200 bg-white/80 px-3 py-1 text-xs font-medium text-slate-600 shadow-sm backdrop-blur-sm dark:border-slate-700 dark:bg-slate-800/80 dark:text-slate-300"
 		>
+			开源 · 现代 Web 工具与组件
+		</span>
+		<h1
+			class="mx-auto mt-6 max-w-3xl text-4xl font-extrabold tracking-tight text-balance text-slate-900 sm:text-6xl dark:text-white"
+		>
+			帮助你快速构建
+			<span class="bg-gradient-to-r from-[#1558a6] via-[#2563eb] to-[#0ea5e9] bg-clip-text text-transparent"
+				>现代网站</span
+			>
+		</h1>
+		<p class="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg dark:text-slate-400">
+			提供各种有用的工具,包括:报表工具、大屏设计器、表单设计器、聊天组件、计算器组件、布局组件、季度选择器组件等等。
+		</p>
+		<div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+			<a
+				href={resolve('/product')}
+				class="inline-flex h-11 items-center rounded-full bg-[#1558a6] px-6 text-sm font-semibold text-white shadow-sm transition hover:bg-[#175fb4] focus-visible:ring-2 focus-visible:ring-[#1558a6] focus-visible:ring-offset-2 focus-visible:outline-none"
+				>浏览产品</a
+			>
+			<a
+				href="https://github.com/mypandora"
+				target="_blank"
+				rel="external noopener noreferrer"
+				class="inline-flex h-11 items-center gap-2 rounded-full border border-slate-300 bg-white px-6 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+			>
+				<svg class="h-[18px] w-[18px]" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+					<path
+						d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"
+					></path>
+				</svg>
+				GitHub
+			</a>
+		</div>
 	</div>
 </section>
 
-<footer class="pt-20 pb-16 text-center sm:pt-32">
-	<div class="text-center">
-		<p class="mt-4 text-sm leading-6 text-slate-500">
-			<span>© 2024 mypandora.cn</span>
+<section class="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
+	<div class="flex items-end justify-between">
+		<div>
+			<h2 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">开源组件</h2>
+			<p class="mt-1 text-sm text-slate-500 dark:text-slate-400">可复用的前端组件库</p>
+		</div>
+		<a href={resolve('/product')} class="hidden text-sm font-semibold text-[#1558a6] sm:block dark:text-sky-400">
+			查看全部 →
+		</a>
+	</div>
+	<div class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+		{#each components as item, i (item.name)}
+			<ProjectCard {item} index={i} />
+		{/each}
+	</div>
+</section>
+
+<section class="bg-slate-50 dark:bg-slate-800/40">
+	<div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
+		<div>
+			<h2 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">在线产品</h2>
+			<p class="mt-1 text-sm text-slate-500 dark:text-slate-400">可直接使用的在线工具</p>
+		</div>
+		<div class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+			{#each products as item, i (item.name)}
+				<ProjectCard {item} index={i + components.length} />
+			{/each}
+		</div>
+	</div>
+</section>
+
+<section class="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
+	<div class="flex items-end justify-between">
+		<div>
+			<h2 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">模板</h2>
+			<p class="mt-1 text-sm text-slate-500 dark:text-slate-400">开箱即用的完整模板</p>
+		</div>
+	</div>
+	<div class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+		{#each templates as item, i (item.name)}
+			<ProjectCard {item} index={i} />
+		{/each}
+	</div>
+</section>
+
+<footer class="border-t border-slate-200 pt-10 pb-6 dark:border-slate-800">
+	<div
+		class="mx-auto flex max-w-7xl flex-col items-center gap-4 px-4 text-sm text-slate-500 sm:px-6 md:flex-row md:justify-between dark:text-slate-400"
+	>
+		<p>© 2024 mypandora.cn</p>
+		<nav class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2" aria-label="页脚导航">
+			<a href={resolve('/product')} class="hover:text-slate-900 dark:hover:text-white">产品</a>
+			<a href={resolve('/showcase')} class="hover:text-slate-900 dark:hover:text-white">示例</a>
+			<a href={resolve('/uniform')} class="hover:text-slate-900 dark:hover:text-white">校服</a>
 			<a
+				href="https://github.com/mypandora"
 				target="_blank"
-				rel="noopener noreferrer"
-				href="https://beian.miit.gov.cn/"
-				class="hover:text-slate-900 dark:hover:text-slate-400">京ICP备2024065750号-1</a
+				rel="external noopener noreferrer"
+				class="hover:text-slate-900 dark:hover:text-white"
 			>
-		</p>
+				GitHub
+			</a>
+		</nav>
+		<a
+			href="https://beian.miit.gov.cn/"
+			target="_blank"
+			rel="external noopener noreferrer"
+			class="hover:text-slate-900 dark:hover:text-white"
+		>
+			京ICP备2024065750号-1
+		</a>
 	</div>
 </footer>
 
 <style>
-	.foo {
+	.hero-grid {
 		background-image:
-			linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-			linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+			linear-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
 		background-size:
-			20px 20px,
-			20px 20px;
+			24px 24px,
+			24px 24px;
 		background-position:
 			-1px -1px,
 			-1px -1px;
+	}
+	:global(.dark) .hero-grid {
+		background-image:
+			linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
 	}
 </style>
