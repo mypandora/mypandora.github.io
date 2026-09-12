@@ -47,7 +47,7 @@
 		{
 			name: '社保选择助手',
 			description: '一个方便的社保医院选择助手。',
-			link: 'https://poi.mypandora.cn/',
+			link: 'https://myhospital.mypandora.cn/',
 			image: '/favicon.png',
 			stack: 'Nestjs, Svelte,'
 		},
@@ -121,7 +121,7 @@
 							/>
 							<div class="flex-auto">
 								<div class="text-base font-semibold text-slate-900 dark:text-slate-300">
-									<a href={item.link} tabindex="0"><span class="absolute inset-0"></span>{item.name}</a>
+									<a href={item.link} rel="external" tabindex="0"><span class="absolute inset-0"></span>{item.name}</a>
 								</div>
 								<div class="mt-0.5">{item.stack}</div>
 							</div>
@@ -149,7 +149,7 @@
 							/>
 							<div class="flex-auto">
 								<div class="text-base font-semibold text-slate-900 dark:text-slate-300">
-									<a href={item.link} tabindex="0"><span class="absolute inset-0"></span>{item.name}</a>
+									<a href={item.link} rel="external" tabindex="0"><span class="absolute inset-0"></span>{item.name}</a>
 								</div>
 								<div class="mt-0.5">{item.stack}</div>
 							</div>
@@ -177,7 +177,7 @@
 							/>
 							<div class="flex-auto">
 								<div class="text-base font-semibold text-slate-900 dark:text-slate-300">
-									<a href={item.link} tabindex="0"><span class="absolute inset-0"></span>{item.name}</a>
+									<a href={item.link} rel="external" tabindex="0"><span class="absolute inset-0"></span>{item.name}</a>
 								</div>
 								<div class="mt-0.5">{item.stack}</div>
 							</div>

@@ -1,6 +1,7 @@
 <script>
 	import { setMode, mode, userPrefersMode } from 'mode-watcher';
 	import { Sun, Moon, Monitor, Search, X, EllipsisVertical } from '@lucide/svelte';
+	import { resolve } from '$app/paths';
 	// import { clickOutside } from '$lib/utils/clickOutside';
 
 	/** @type {'light' | 'dark' | 'system'} */
@@ -60,16 +61,16 @@
 							</button>
 							<ul class="space-y-6">
 								<li>
-									<a class="hover:text-sky-500 dark:hover:text-sky-400" href="/">首页</a>
+									<a class="hover:text-sky-500 dark:hover:text-sky-400" href={resolve('/')}>首页</a>
 								</li>
 								<li>
-									<a class="hover:text-sky-500 dark:hover:text-sky-400" href="/uniform">校服</a>
+									<a class="hover:text-sky-500 dark:hover:text-sky-400" href={resolve('/uniform')}>校服</a>
 								</li>
 								<li>
-									<a class="hover:text-sky-500 dark:hover:text-sky-400" href="/product">产品</a>
+									<a class="hover:text-sky-500 dark:hover:text-sky-400" href={resolve('/product')}>产品</a>
 								</li>
 								<li>
-									<a class="hover:text-sky-500 dark:hover:text-sky-400" href="/showcase">示例</a>
+									<a class="hover:text-sky-500 dark:hover:text-sky-400" href={resolve('/showcase')}>示例</a>
 								</li>
 							</ul>
 							<div class="mt-6 border-t border-slate-200 pt-6 dark:border-slate-200/10">
@@ -120,16 +121,16 @@
 				<nav>
 					<ul class="flex items-center gap-x-8">
 						<li>
-							<a href="/" class="hover:text-sky-500 dark:hover:text-sky-400">首页</a>
+							<a href={resolve('/')} class="hover:text-sky-500 dark:hover:text-sky-400">首页</a>
 						</li>
 						<li>
-							<a href="/uniform" class="hover:text-sky-500 dark:hover:text-sky-400">校服</a>
+							<a href={resolve('/uniform')} class="hover:text-sky-500 dark:hover:text-sky-400">校服</a>
 						</li>
 						<li>
-							<a href="/product" class="hover:text-sky-500 dark:hover:text-sky-400">产品</a>
+							<a href={resolve('/product')} class="hover:text-sky-500 dark:hover:text-sky-400">产品</a>
 						</li>
 						<li>
-							<a href="/showcase" class="hover:text-sky-500 dark:hover:text-sky-400">示例</a>
+							<a href={resolve('/showcase')} class="hover:text-sky-500 dark:hover:text-sky-400">示例</a>
 						</li>
 					</ul>
 				</nav>
