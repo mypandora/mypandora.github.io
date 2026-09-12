@@ -1,32 +1,18 @@
 <script>
 	import { X, ChevronLeft, ChevronRight } from '@lucide/svelte';
+	import UniformGallery from './UniformGallery.svelte';
 
 	let { school, categoryName, onClose, onPrev, onNext } = $props();
 	let current = $state(0);
-
-	function prevImage() {
-		current = (current - 1 + school.images.length) % school.images.length;
-	}
-
-	function nextImage() {
-		current = (current + 1) % school.images.length;
-	}
-
-	$effect(() => {
-		// 预加载：当前套其余图 + 相邻套封面
-		school.images.forEach((/** @type {string} */ src) => {
-			const img = new Image();
-			img.src = src;
-		});
-		current = 0;
-	});
+	/** @type {import('swiper').default | null} */
+	let gallery = $state(null);
 
 	$effect(() => {
 		/** @param {KeyboardEvent} e */
 		function onKeydown(e) {
 			if (e.key === 'Escape') onClose();
-			if (e.key === 'ArrowLeft') prevImage();
-			if (e.key === 'ArrowRight') nextImage();
+			if (e.key === 'ArrowLeft') gallery?.slidePrev();
+			if (e.key === 'ArrowRight') gallery?.slideNext();
 		}
 		window.addEventListener('keydown', onKeydown);
 		const prev = document.body.style.overflow;
@@ -61,28 +47,30 @@
 			</button>
 		</div>
 
-		<div class="relative mt-4 flex min-h-0 flex-1 items-center justify-center">
+		<div class="relative mt-4 flex min-h-0 flex-1">
+			{#key school.code}
+				<UniformGallery
+					images={school.images}
+					alt="{categoryName}编号{school.code}"
+					register={(swiper) => (gallery = swiper)}
+					onchange={(index) => (current = index)}
+				/>
+			{/key}
+
 			<button
 				type="button"
-				class="absolute left-1 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 sm:left-3"
+				class="absolute top-1/2 left-1 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 sm:left-3"
 				aria-label="上一张"
-				onclick={prevImage}
+				onclick={() => gallery?.slidePrev()}
 			>
 				<ChevronLeft size={20} />
 			</button>
 
-			<img
-				src={school.images[current]}
-				alt="{categoryName}编号{school.code}第{current + 1}张"
-				decoding="async"
-				class="max-h-full w-auto max-w-full rounded-lg bg-neutral-900 object-contain shadow-xl"
-			/>
-
 			<button
 				type="button"
-				class="absolute right-1 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 sm:right-3"
+				class="absolute top-1/2 right-1 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 sm:right-3"
 				aria-label="下一张"
-				onclick={nextImage}
+				onclick={() => gallery?.slideNext()}
 			>
 				<ChevronRight size={20} />
 			</button>
