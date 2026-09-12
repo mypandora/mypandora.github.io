@@ -1,7 +1,9 @@
 <script>
 	import { UNIFORMS } from '$lib/data/uniforms.js';
+	import UniformLightbox from '$lib/components/uniform/UniformLightbox.svelte';
 
 	let active = $state(UNIFORMS[0].key);
+	let open = $state(/** @type {import('$lib/data/uniforms.js').UniformSchool | null} */ (null));
 
 	const activeInfo = $derived(UNIFORMS.find((c) => c.key === active) ?? UNIFORMS[0]);
 	const schools = $derived(activeInfo.schools);
@@ -39,6 +41,7 @@
 				type="button"
 				class="group overflow-hidden rounded-xl bg-slate-100 text-left ring-1 ring-slate-900/5 transition hover:ring-2 hover:ring-[#1558a6] dark:bg-slate-800 dark:ring-slate-800"
 				aria-label="打开{activeInfo.name}编号{school.code}"
+				onclick={() => (open = school)}
 			>
 				<img
 					src={school.images[0]}
@@ -54,3 +57,19 @@
 		{/each}
 	</div>
 </section>
+
+{#if open}
+	<UniformLightbox
+		school={open}
+		categoryName={activeInfo.name}
+		onClose={() => (open = null)}
+		onPrev={() => {
+			const idx = schools.findIndex((s) => s.code === open?.code);
+			open = schools[(idx - 1 + schools.length) % schools.length];
+		}}
+		onNext={() => {
+			const idx = schools.findIndex((s) => s.code === open?.code);
+			open = schools[(idx + 1) % schools.length];
+		}}
+	/>
+{/if}

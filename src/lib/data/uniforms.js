@@ -4,8 +4,11 @@ export const CATEGORIES = [
 	{ key: 'senior', letter: 'C', name: '高中（中职）', description: '高中校服方案' }
 ];
 
+/** @typedef {{ code: string, category: string, images: string[] }} UniformSchool */
+
 /**
  * @param {{ key: string, letter: string }} category
+ * @returns {UniformSchool[]}
  */
 function buildSchools(category) {
 	return Array.from({ length: 15 }, (_, i) => {
