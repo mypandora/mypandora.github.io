@@ -47,6 +47,35 @@ body {
 		radial-gradient(40rem 20rem at 85% 10rem, rgba(34, 211, 238, 0.06), transparent 70%);
 }
 
+/* Light-mode semantic remap: the UI is dark-first (text-slate-50 headings,
+   text-slate-400 bodies on near-black). Remap those utilities on light
+   backgrounds instead of duplicating every component. */
+:root:not(.dark) {
+	.text-slate-50,
+	.text-slate-100 {
+		color: #0b1220;
+	}
+
+	.text-slate-200,
+	.text-slate-300 {
+		color: #334155;
+	}
+
+	.text-slate-400,
+	.text-slate-500,
+	.text-slate-600 {
+		color: #475569;
+	}
+
+	.hover\:text-white:hover {
+		color: #0b1220;
+	}
+
+	.border-white\/10 {
+		border-color: rgba(15, 23, 42, 0.1);
+	}
+}
+
 ::selection {
 	background: rgba(96, 165, 250, 0.3);
 	color: #fff;
