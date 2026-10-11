@@ -13,7 +13,7 @@
 - 路由:`/`(首页)、`/product`、`/showcase`、`/uniform`
 - 数据:`src/lib/data/projects.js`(6 个开源组件、3 个在线产品、1 个模板),`src/lib/data/uniforms.js`(3 个分类 × 15 所学校 = 45 套方案,每校 4 张图,图片走 `https://img.mypandora.cn`)
 - 部署:GitHub Actions 通过 SSH(rsync)把 `build/` 推到自有服务器
-- 页脚含 ICP 备案号 京ICP备2024065750号-1;app.html 含 Umami 统计脚本
+- 页脚含 ICP 备案号 京ICP备2024065750号-1;app.html 含 Umami 统计脚本(Umami 免费服务已停止,本次移除)
 
 ## 2. 目标与非目标
 
@@ -29,7 +29,8 @@
 ### 非目标
 
 - 不引入服务端逻辑、数据库、CMS;不更换 adapter 到 Workers(保持纯静态)
-- 不改动任何外链 URL、CDN 域名、备案号、Umami ID
+- 不改动任何外链 URL、CDN 域名、备案号
+- 移除 Umami 统计脚本(免费服务已停止),不引入替代统计
 - 不新增重型动画库(GSAP 等);动效用原生 CSS / Svelte action 实现,保持轻量
 - 不做 i18n、不做新路由内容(校服详情仍用灯箱)
 
@@ -99,7 +100,7 @@
 ### 4.5 全局
 
 - `+layout.svelte`:Nav + main + Footer;保留 ModeWatcher 与 PreloadingIndicator
-- `app.html`:`lang="zh-CN"`,新增 meta description 默认值、OG/Twitter 占位标签、`theme-color`(深色)、SVG favicon
+- `app.html`:`lang="zh-CN"`,移除 Umami 脚本,新增 meta description 默认值、OG/Twitter 占位标签、`theme-color`(深色)、SVG favicon
 - `app.css`:Tailwind 导入 + `@theme` 令牌 + 全局背景、选中色、滚动条、动效关键帧(reveal、aurora、float)、reduced-motion 全局降级
 
 ## 5. 数据与占位符策略
@@ -112,7 +113,7 @@
 
 - 保持 adapter-static 与 prerender,不改构建产物目录(`build/`),配置 `paths` 维持现状(当前无 base)
 - 新增:
-  - `static/_headers`:`/_app/*` 与 `/assets/*` 长缓存(1y, immutable);HTML `no-cache`;安全头(X-Content-Type-Options、Referrer-Policy、Permissions-Policy 等;不加 CSP 以免挡住 Umami/CDN,或先放 Report-Only——首版不加强 CSP)
+  - `static/_headers`:`/_app/*` 与 `/assets/*` 长缓存(1y, immutable);HTML `no-cache`;安全头(X-Content-Type-Options、Referrer-Policy、Permissions-Policy 等;首版加强 CSP——Umami 已移除,外部资源仅剩 CDN 图片,可用 `img-src` 白名单;CSP 具体规则在实现时验证不挡灯箱与内联样式)
   - `wrangler.jsonc`:`{ "name": "mypandora", "pages_build_output_dir": "build" }`(占位 name,可改)
   - package.json 脚本:`"deploy": "pnpm build && wrangler pages deploy build"`(wrangler 作为 devDependency)
 - CI:重写 `.github/workflows/main.yml`:pnpm install、`pnpm build`、`pnpm check`、`pnpm lint`,然后 `cloudflare/wrangler-action@v3`,`CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID` 走 secrets;同时保留"Cloudflare 控制台 Git 集成直连"的说明(无需 CI 也可)
