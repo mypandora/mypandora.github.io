@@ -3,6 +3,8 @@
 	import { page } from '$app/state';
 	import { resolve } from '$app/paths';
 	import { Sun, Moon, Monitor, Home, Package, Shirt, Sparkles } from '@lucide/svelte';
+	import Logo from './site/Logo.svelte';
+	import { onMount } from 'svelte';
 
 	/** @type {Array<{ href: '/' | '/product' | '/uniform' | '/showcase', label: string, icon: typeof Home }>} */
 	const links = [
@@ -22,67 +24,84 @@
 		const current = userPrefersMode.current;
 		setMode(current === 'light' ? 'dark' : current === 'dark' ? 'system' : 'light');
 	}
+
+	let scrolled = $state(false);
+	let frame = 0;
+
+	onMount(() => {
+		function onScroll() {
+			if (frame) return;
+			frame = requestAnimationFrame(() => {
+				frame = 0;
+				scrolled = window.scrollY > 8;
+			});
+		}
+		onScroll();
+		window.addEventListener('scroll', onScroll, { passive: true });
+		return () => {
+			window.removeEventListener('scroll', onScroll);
+			if (frame) cancelAnimationFrame(frame);
+		};
+	});
 </script>
 
-<header
-	class="sticky top-0 z-40 border-b border-slate-200/70 bg-white/85 backdrop-blur-md dark:border-slate-800 dark:bg-slate-900/85"
->
-	<div class="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6 md:h-16">
-		<a href={resolve('/')} class="flex items-center gap-2 font-bold tracking-tight text-slate-900 dark:text-white">
-			<span
-				class="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-[#1558a6] to-[#0ea5e9] text-sm text-white"
-				>m</span
-			>
-			mypandora
-		</a>
+<!-- Desktop floating island -->
+<header class="pointer-events-none sticky top-0 z-40 px-4 pt-3">
+	<div
+		class="pointer-events-auto mx-auto flex h-14 max-w-5xl items-center justify-between rounded-full px-4 pl-5 transition-all duration-300 md:px-5 {scrolled
+			? 'glass glow'
+			: 'border border-transparent bg-transparent'}"
+	>
+		<Logo />
 
-		<nav class="hidden items-center gap-7 md:flex" aria-label="主导航">
+		<nav class="hidden items-center gap-1 md:flex" aria-label="主导航">
 			{#each links as link (link.href)}
 				<a
 					href={resolve(link.href)}
-					class="text-sm font-medium transition hover:text-slate-900 {active(link.href)
-						? 'text-slate-900 dark:text-white'
-						: 'text-slate-500 dark:text-slate-400 dark:hover:text-white'}"
+					class="relative rounded-full px-4 py-2 text-sm font-medium transition {active(link.href)
+						? 'text-white'
+						: 'text-slate-400 hover:text-white'}"
 				>
-					{link.label}
+					{#if active(link.href)}
+						<span class="btn-gradient absolute inset-0 rounded-full opacity-95"></span>
+					{/if}
+					<span class="relative">{link.label}</span>
 				</a>
 			{/each}
 		</nav>
 
-		<div class="flex items-center gap-2">
-			<button
-				type="button"
-				aria-label="切换主题"
-				class="flex h-9 w-9 items-center justify-center rounded-full text-slate-500 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
-				onclick={cycleTheme}
-			>
-				{#if userPrefersMode.current === 'light'}
-					<Sun size={19} />
-				{:else if userPrefersMode.current === 'dark'}
-					<Moon size={19} />
-				{:else}
-					<Monitor size={19} />
-				{/if}
-			</button>
-		</div>
+		<button
+			type="button"
+			aria-label="切换主题"
+			class="glass flex h-9 w-9 items-center justify-center rounded-full text-slate-300 transition hover:text-white"
+			onclick={cycleTheme}
+		>
+			{#if userPrefersMode.current === 'light'}
+				<Sun size={17} />
+			{:else if userPrefersMode.current === 'dark'}
+				<Moon size={17} />
+			{:else}
+				<Monitor size={17} />
+			{/if}
+		</button>
 	</div>
 </header>
 
+<!-- Mobile floating dock -->
 <nav
-	class="fixed inset-x-0 bottom-0 z-40 border-t border-slate-200/70 bg-white/90 backdrop-blur-md md:hidden dark:border-slate-800 dark:bg-slate-900/90"
+	class="glass fixed inset-x-4 bottom-4 z-40 grid grid-cols-4 rounded-2xl py-1.5 md:hidden"
+	style="padding-bottom: calc(0.375rem + env(safe-area-inset-bottom))"
 	aria-label="移动端导航"
 >
-	<div class="grid grid-cols-4 pb-[env(safe-area-inset-bottom)]">
-		{#each links as link (link.href)}
-			<a
-				href={resolve(link.href)}
-				class="flex flex-col items-center gap-0.5 py-2.5 text-[11px] font-medium {active(link.href)
-					? 'text-[#1558a6] dark:text-sky-400'
-					: 'text-slate-400 dark:text-slate-500'}"
-			>
-				<link.icon size={20} strokeWidth={active(link.href) ? 2.4 : 2} />
-				{link.label}
-			</a>
-		{/each}
-	</div>
+	{#each links as link (link.href)}
+		<a
+			href={resolve(link.href)}
+			class="flex flex-col items-center gap-0.5 py-1.5 text-[11px] font-medium transition {active(link.href)
+				? 'text-brand-400'
+				: 'text-slate-500'}"
+		>
+			<link.icon size={20} strokeWidth={active(link.href) ? 2.5 : 2} />
+			{link.label}
+		</a>
+	{/each}
 </nav>

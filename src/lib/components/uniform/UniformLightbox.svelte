@@ -1,4 +1,5 @@
 <script>
+	import { fade, scale } from 'svelte/transition';
 	import { X, ChevronLeft, ChevronRight } from '@lucide/svelte';
 	import UniformGallery from './UniformGallery.svelte';
 
@@ -6,6 +7,10 @@
 	let current = $state(0);
 	/** @type {import('swiper').default | null} */
 	let gallery = $state(null);
+
+	const reduceMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+	const fadeDuration = reduceMotion ? 0 : 200;
+	const scaleDuration = reduceMotion ? 0 : 220;
 
 	$effect(() => {
 		/** @param {KeyboardEvent} e */
@@ -25,21 +30,30 @@
 </script>
 
 <div
-	class="fixed inset-0 z-50 flex items-center justify-center bg-black/85 pr-5 pb-5 pl-5 sm:pr-8 sm:pb-8 sm:pl-8"
+	class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] backdrop-blur-md sm:px-8 sm:pt-8 sm:pb-[max(2rem,env(safe-area-inset-bottom))]"
 	role="dialog"
 	aria-modal="true"
 	aria-label="{categoryName}编号{school.code}方案"
 	tabindex="-1"
+	transition:fade={{ duration: fadeDuration }}
 >
 	<button type="button" aria-label="关闭" class="absolute inset-0 z-0 cursor-default bg-transparent" onclick={onClose}
 	></button>
 
-	<div class="relative z-10 mx-auto flex h-full w-full max-w-5xl flex-col">
-		<div class="flex items-center justify-between text-white">
-			<h2 class="text-sm font-semibold">{categoryName}编号{school.code}</h2>
+	<div
+		class="glass relative z-10 mx-auto flex h-full w-full max-w-5xl flex-col rounded-3xl p-4 sm:p-6"
+		transition:scale={{ duration: scaleDuration, start: 0.94 }}
+	>
+		<div class="flex items-center justify-between text-slate-100">
+			<h2 class="flex items-center gap-2 text-sm font-semibold">
+				<span class="btn-gradient rounded-full px-2.5 py-0.5 text-xs font-bold text-white">
+					{school.code}
+				</span>
+				{categoryName}校服方案
+			</h2>
 			<button
 				type="button"
-				class="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-white/20"
+				class="glass flex h-9 w-9 items-center justify-center rounded-full text-slate-300 transition hover:text-white"
 				aria-label="关闭"
 				onclick={onClose}
 			>
@@ -59,7 +73,7 @@
 
 			<button
 				type="button"
-				class="absolute top-1/2 left-1 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 sm:left-3"
+				class="glass absolute top-1/2 left-1 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full text-slate-200 transition hover:text-white sm:left-3"
 				aria-label="上一张"
 				onclick={() => gallery?.slidePrev()}
 			>
@@ -68,7 +82,7 @@
 
 			<button
 				type="button"
-				class="absolute top-1/2 right-1 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 sm:right-3"
+				class="glass absolute top-1/2 right-1 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full text-slate-200 transition hover:text-white sm:right-3"
 				aria-label="下一张"
 				onclick={() => gallery?.slideNext()}
 			>
@@ -76,18 +90,20 @@
 			</button>
 		</div>
 
-		<div class="mt-4 flex items-center justify-between text-white">
+		<div class="mt-4 flex items-center justify-between text-slate-200">
 			<button
 				type="button"
-				class="rounded-full bg-white/10 px-4 py-2 text-sm font-semibold hover:bg-white/20"
+				class="glass rounded-full px-4 py-2 text-sm font-semibold transition hover:text-white"
 				onclick={onPrev}
 			>
 				上一套
 			</button>
-			<span class="text-sm text-white/70">第 {current + 1} 张 / 共 {school.images.length} 张</span>
+			<span class="text-sm text-slate-400 tabular-nums">
+				第 {current + 1} 张 / 共 {school.images.length} 张
+			</span>
 			<button
 				type="button"
-				class="rounded-full bg-white/10 px-4 py-2 text-sm font-semibold hover:bg-white/20"
+				class="glass rounded-full px-4 py-2 text-sm font-semibold transition hover:text-white"
 				onclick={onNext}
 			>
 				下一套

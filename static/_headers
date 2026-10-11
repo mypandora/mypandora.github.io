@@ -1,0 +1,39 @@
+# Cloudflare Pages headers
+# https://developers.cloudflare.com/pages/configuration/headers/
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  X-Frame-Options: SAMEORIGIN
+
+# Hashed build assets — immutable
+/_app/immutable/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Prerendered HTML — always revalidate (covers clean URLs and .html files)
+/
+  Cache-Control: no-cache
+/index.html
+  Cache-Control: no-cache
+/product
+  Cache-Control: no-cache
+/product/
+  Cache-Control: no-cache
+/product.html
+  Cache-Control: no-cache
+/showcase
+  Cache-Control: no-cache
+/showcase/
+  Cache-Control: no-cache
+/showcase.html
+  Cache-Control: no-cache
+/uniform
+  Cache-Control: no-cache
+/uniform/
+  Cache-Control: no-cache
+/uniform.html
+  Cache-Control: no-cache

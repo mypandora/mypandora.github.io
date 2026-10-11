@@ -6,23 +6,27 @@
 
 	onMount(() => {
 		visible = true;
+		/** @type {ReturnType<typeof setTimeout> | undefined} */
+		let timer;
 		function next() {
 			p += 0.1;
 			const remaining = 1 - p;
 			if (remaining > 0.15) {
-				setTimeout(next, 500 / remaining);
+				timer = setTimeout(next, 500 / remaining);
 			}
 		}
-		setTimeout(next, 250);
+		timer = setTimeout(next, 80);
+		return () => {
+			if (timer) clearTimeout(timer);
+		};
 	});
 </script>
 
 {#if visible}
-	<div class="absolute top-0 left-0 z-50 h-1 w-full">
-		<div class="absolute top-0 left-0 h-full bg-[#5cb85c] transition-all" style="width: {p * 100}%"></div>
+	<div class="fixed inset-x-0 top-0 z-[60] h-0.5">
+		<div
+			class="from-brand-500 via-brand-400 to-accent-cyan h-full rounded-r-full bg-gradient-to-r shadow-[0_0_12px_rgba(56,189,248,0.8)] transition-[width] duration-300 ease-out"
+			style="width: {p * 100}%"
+		></div>
 	</div>
-{/if}
-
-{#if p >= 0.4}
-	<div class="animate-fade pointer-events-none fixed z-40 h-full w-full bg-[rgba(255,255,255,0.3)]"></div>
 {/if}

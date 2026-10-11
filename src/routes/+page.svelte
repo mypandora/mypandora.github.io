@@ -1,7 +1,24 @@
 <script>
 	import { resolve } from '$app/paths';
-	import ProjectCard from '$lib/components/site/ProjectCard.svelte';
+	import SpotlightCard from '$lib/components/site/SpotlightCard.svelte';
+	import SectionHeading from '$lib/components/site/SectionHeading.svelte';
+	import Aurora from '$lib/components/site/Aurora.svelte';
+	import BrowserMockup from '$lib/components/site/BrowserMockup.svelte';
+	import { reveal } from '$lib/actions/reveal.js';
 	import { components, products, templates } from '$lib/data/projects';
+	import { features } from '$lib/data/site';
+	import { UNIFORMS } from '$lib/data/uniforms.js';
+	import { ArrowRight, ArrowUpRight, Shirt } from '@lucide/svelte';
+
+	const uniformCount = UNIFORMS.reduce((n, c) => n + c.schools.length, 0);
+	const IMG_CDN = 'https://img.mypandora.cn';
+
+	const stats = [
+		{ value: components.length, label: '开源组件' },
+		{ value: products.length, label: '在线产品' },
+		{ value: uniformCount, label: '校服方案' },
+		{ value: templates.length, label: '完整模板' }
+	];
 </script>
 
 <svelte:head>
@@ -12,38 +29,44 @@
 	/>
 </svelte:head>
 
-<section class="hero-grid relative overflow-hidden">
-	<div
-		class="pointer-events-none absolute inset-0 bg-[radial-gradient(60rem_30rem_at_50%_-10%,rgba(21,88,166,0.12),transparent)]"
-	></div>
-	<div class="relative mx-auto max-w-7xl px-4 pt-16 pb-14 text-center sm:px-6 sm:pt-24 sm:pb-20">
-		<span
-			class="inline-flex items-center rounded-full border border-slate-200 bg-white/80 px-3 py-1 text-xs font-medium text-slate-600 shadow-sm backdrop-blur-sm dark:border-slate-700 dark:bg-slate-800/80 dark:text-slate-300"
-		>
-			开源 · 现代 Web 工具与组件
-		</span>
+<!-- Hero -->
+<section class="relative overflow-hidden">
+	<Aurora />
+	<div class="grid-overlay pointer-events-none absolute inset-0"></div>
+
+	<div class="relative mx-auto max-w-7xl px-4 pt-20 pb-10 text-center sm:px-6 sm:pt-28">
+		<div use:reveal>
+			<span class="glass inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-medium text-slate-300">
+				<span class="bg-accent-cyan h-1.5 w-1.5 rounded-full shadow-[0_0_8px_#22d3ee]"></span>
+				开源 · 现代 Web 工具与组件
+			</span>
+		</div>
+
 		<h1
-			class="mx-auto mt-6 max-w-3xl text-4xl font-extrabold tracking-tight text-balance text-slate-900 sm:text-6xl dark:text-white"
+			use:reveal={{ delay: 80 }}
+			class="mx-auto mt-7 max-w-4xl text-5xl leading-[1.08] font-extrabold tracking-tight text-balance text-slate-50 sm:text-7xl"
 		>
-			帮助你快速构建
-			<span class="bg-gradient-to-r from-[#1558a6] via-[#2563eb] to-[#0ea5e9] bg-clip-text text-transparent"
-				>现代网站</span
-			>
+			帮助你快速构建<br />
+			<span class="text-gradient">现代网站</span>
 		</h1>
-		<p class="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg dark:text-slate-400">
+
+		<p use:reveal={{ delay: 160 }} class="mx-auto mt-6 max-w-2xl text-base leading-8 text-slate-400 sm:text-lg">
 			提供各种有用的工具,包括:报表工具、大屏设计器、表单设计器、聊天组件、计算器组件、布局组件、季度选择器组件等等。
 		</p>
-		<div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+
+		<div use:reveal={{ delay: 240 }} class="mt-9 flex flex-wrap items-center justify-center gap-3">
 			<a
 				href={resolve('/product')}
-				class="inline-flex h-11 items-center rounded-full bg-[#1558a6] px-6 text-sm font-semibold text-white shadow-sm transition hover:bg-[#175fb4] focus-visible:ring-2 focus-visible:ring-[#1558a6] focus-visible:ring-offset-2 focus-visible:outline-none"
-				>浏览产品</a
+				class="btn-gradient glow focus-visible:ring-brand-400 focus-visible:ring-offset-base inline-flex h-12 items-center gap-2 rounded-full px-7 text-sm font-semibold text-white transition focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
 			>
+				浏览产品
+				<ArrowRight size={16} />
+			</a>
 			<a
 				href="https://github.com/mypandora"
 				target="_blank"
 				rel="external noopener noreferrer"
-				class="inline-flex h-11 items-center gap-2 rounded-full border border-slate-300 bg-white px-6 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+				class="glass inline-flex h-12 items-center gap-2 rounded-full px-7 text-sm font-semibold text-slate-200 transition hover:text-white"
 			>
 				<svg class="h-[18px] w-[18px]" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
 					<path
@@ -54,97 +77,169 @@
 			</a>
 		</div>
 	</div>
+
+	<!-- Browser preview -->
+	<div class="relative mx-auto mt-6 max-w-5xl px-4 sm:px-6" use:reveal={{ delay: 200 }}>
+		<BrowserMockup />
+	</div>
 </section>
 
-<section class="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
-	<div class="flex items-end justify-between">
-		<div>
-			<h2 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">开源组件</h2>
-			<p class="mt-1 text-sm text-slate-500 dark:text-slate-400">可复用的前端组件库</p>
-		</div>
-		<a href={resolve('/product')} class="hidden text-sm font-semibold text-[#1558a6] sm:block dark:text-sky-400">
-			查看全部 →
-		</a>
-	</div>
-	<div class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
-		{#each components as item, i (item.name)}
-			<ProjectCard {item} index={i} />
+<!-- Stats -->
+<section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
+	<div use:reveal class="glass grid grid-cols-2 gap-6 rounded-3xl px-6 py-8 sm:grid-cols-4 sm:px-10">
+		{#each stats as stat (stat.label)}
+			<div class="text-center">
+				<p class="text-gradient text-4xl font-extrabold tabular-nums sm:text-5xl">{stat.value}</p>
+				<p class="mt-2 text-sm text-slate-400">{stat.label}</p>
+			</div>
 		{/each}
 	</div>
 </section>
 
-<section class="bg-slate-50 dark:bg-slate-800/40">
+<!-- Features -->
+<section class="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12">
+	<SectionHeading
+		align="center"
+		eyebrow="能力"
+		title="构建现代网站所需的一切"
+		subtitle="从数据可视化到表单与对话,一套可复用的前端能力。"
+	/>
+	<div class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+		{#each features as feature, i (feature.title)}
+			<div use:reveal={{ delay: (i % 3) * 90 }}>
+				<div class="glass group h-full rounded-2xl p-6 transition-transform duration-300 hover:-translate-y-1">
+					<div
+						class="from-brand-500/20 to-accent-cyan/20 text-brand-400 group-hover:text-accent-cyan flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br ring-1 ring-white/10 transition"
+					>
+						<feature.icon size={21} />
+					</div>
+					<h3 class="mt-5 text-base font-bold text-slate-100">{feature.title}</h3>
+					<p class="mt-2 text-sm leading-7 text-slate-400">{feature.description}</p>
+				</div>
+			</div>
+		{/each}
+	</div>
+</section>
+
+<!-- Open source components -->
+<section class="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
+	<div class="flex items-end justify-between gap-4">
+		<SectionHeading eyebrow="Components" title="开源组件" subtitle="可复用的前端组件库" />
+		<a
+			href={resolve('/product')}
+			class="text-brand-400 hidden shrink-0 items-center gap-1 text-sm font-semibold transition hover:gap-1.5 sm:inline-flex"
+		>
+			查看全部 <ArrowRight size={15} />
+		</a>
+	</div>
+	<div class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+		{#each components as item, i (item.name)}
+			<div use:reveal={{ delay: (i % 3) * 80 }}>
+				<SpotlightCard {item} index={i} />
+			</div>
+		{/each}
+	</div>
+</section>
+
+<!-- Online products -->
+<section class="relative border-y border-white/5 bg-white/[0.02]">
 	<div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
-		<div>
-			<h2 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">在线产品</h2>
-			<p class="mt-1 text-sm text-slate-500 dark:text-slate-400">可直接使用的在线工具</p>
-		</div>
-		<div class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+		<SectionHeading eyebrow="Products" title="在线产品" subtitle="可直接使用的在线工具" />
+		<div class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
 			{#each products as item, i (item.name)}
-				<ProjectCard {item} index={i + components.length} />
+				<div use:reveal={{ delay: (i % 3) * 80 }}>
+					<SpotlightCard {item} index={i + components.length} />
+				</div>
 			{/each}
 		</div>
 	</div>
 </section>
 
-<section class="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
-	<div class="flex items-end justify-between">
-		<div>
-			<h2 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">模板</h2>
-			<p class="mt-1 text-sm text-slate-500 dark:text-slate-400">开箱即用的完整模板</p>
+<!-- Uniform showcase banner -->
+<section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20">
+	<div use:reveal class="spotlight-card glass relative overflow-hidden rounded-3xl p-8 sm:p-12">
+		<div class="grid items-center gap-10 md:grid-cols-2">
+			<div>
+				<span
+					class="text-brand-300 inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold"
+				>
+					<Shirt size={13} />
+					校服方案
+				</span>
+				<h2 class="mt-5 text-3xl font-extrabold tracking-tight text-slate-50 sm:text-4xl">
+					石家庄市<span class="text-gradient">校服方案展示</span>
+				</h2>
+				<p class="mt-4 max-w-md text-sm leading-7 text-slate-400">
+					小学、初中、高中(中职){uniformCount} 套校服方案在线浏览,支持大图灯箱与键盘切换。
+				</p>
+				<a
+					href={resolve('/uniform')}
+					class="btn-gradient glow mt-7 inline-flex h-11 items-center gap-2 rounded-full px-6 text-sm font-semibold text-white"
+				>
+					进入展示
+					<ArrowRight size={16} />
+				</a>
+			</div>
+
+			<div class="relative grid grid-cols-3 gap-3">
+				<img
+					src="{IMG_CDN}/primary/A1/1.webp"
+					alt="小学校服方案 A1"
+					loading="lazy"
+					decoding="async"
+					class="mt-6 aspect-3/4 w-full rounded-2xl object-cover ring-1 ring-white/10 transition duration-500 hover:scale-105"
+				/>
+				<img
+					src="{IMG_CDN}/junior/B1/1.webp"
+					alt="初中校服方案 B1"
+					loading="lazy"
+					decoding="async"
+					class="aspect-3/4 w-full rounded-2xl object-cover ring-1 ring-white/10 transition duration-500 hover:scale-105"
+				/>
+				<img
+					src="{IMG_CDN}/primary/A2/1.webp"
+					alt="小学校服方案 A2"
+					loading="lazy"
+					decoding="async"
+					class="mt-6 aspect-3/4 w-full rounded-2xl object-cover ring-1 ring-white/10 transition duration-500 hover:scale-105"
+				/>
+			</div>
 		</div>
 	</div>
-	<div class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+</section>
+
+<!-- Templates -->
+<section class="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
+	<SectionHeading eyebrow="Templates" title="模板" subtitle="开箱即用的完整模板" />
+	<div class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
 		{#each templates as item, i (item.name)}
-			<ProjectCard {item} index={i} />
+			<div use:reveal={{ delay: (i % 3) * 80 }}>
+				<SpotlightCard {item} index={i} />
+			</div>
 		{/each}
 	</div>
 </section>
 
-<footer class="border-t border-slate-200 pt-10 pb-6 dark:border-slate-800">
-	<div
-		class="mx-auto flex max-w-7xl flex-col items-center gap-4 px-4 text-sm text-slate-500 sm:px-6 md:flex-row md:justify-between dark:text-slate-400"
-	>
-		<p>© 2024 mypandora.cn</p>
-		<nav class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2" aria-label="页脚导航">
-			<a href={resolve('/product')} class="hover:text-slate-900 dark:hover:text-white">产品</a>
-			<a href={resolve('/showcase')} class="hover:text-slate-900 dark:hover:text-white">示例</a>
-			<a href={resolve('/uniform')} class="hover:text-slate-900 dark:hover:text-white">校服</a>
+<!-- Final CTA -->
+<section class="relative mx-auto max-w-7xl overflow-hidden px-4 py-16 sm:px-6 sm:py-20">
+	<div use:reveal class="glass relative overflow-hidden rounded-3xl px-6 py-16 text-center sm:py-20">
+		<Aurora />
+		<div class="relative">
+			<h2 class="mx-auto max-w-2xl text-3xl font-extrabold tracking-tight text-balance text-slate-50 sm:text-4xl">
+				在 GitHub 上关注 <span class="text-gradient">mypandora</span>
+			</h2>
+			<p class="mx-auto mt-4 max-w-xl text-sm leading-7 text-slate-400 sm:text-base">
+				所有开源组件持续更新,欢迎 Star、反馈与共建。
+			</p>
 			<a
 				href="https://github.com/mypandora"
 				target="_blank"
 				rel="external noopener noreferrer"
-				class="hover:text-slate-900 dark:hover:text-white"
+				class="glass mt-8 inline-flex h-12 items-center gap-2 rounded-full px-7 text-sm font-semibold text-slate-100 transition hover:text-white"
 			>
-				GitHub
+				访问 GitHub
+				<ArrowUpRight size={16} />
 			</a>
-		</nav>
-		<a
-			href="https://beian.miit.gov.cn/"
-			target="_blank"
-			rel="external noopener noreferrer"
-			class="hover:text-slate-900 dark:hover:text-white"
-		>
-			京ICP备2024065750号-1
-		</a>
+		</div>
 	</div>
-</footer>
-
-<style>
-	.hero-grid {
-		background-image:
-			linear-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px),
-			linear-gradient(90deg, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
-		background-size:
-			24px 24px,
-			24px 24px;
-		background-position:
-			-1px -1px,
-			-1px -1px;
-	}
-	:global(.dark) .hero-grid {
-		background-image:
-			linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-			linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-	}
-</style>
+</section>
