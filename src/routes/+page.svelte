@@ -57,7 +57,7 @@
 		<div use:reveal={{ delay: 240 }} class="mt-9 flex flex-wrap items-center justify-center gap-3">
 			<a
 				href={resolve('/product')}
-				class="from-brand-500 to-accent-cyan glow focus-visible:ring-brand-400 focus-visible:ring-offset-base inline-flex h-12 items-center gap-2 rounded-full bg-gradient-to-r px-7 text-sm font-semibold text-white transition hover:brightness-110 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+				class="btn-gradient glow focus-visible:ring-brand-400 focus-visible:ring-offset-base inline-flex h-12 items-center gap-2 rounded-full px-7 text-sm font-semibold text-white transition focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
 			>
 				浏览产品
 				<ArrowRight size={16} />
@@ -87,8 +87,8 @@
 <!-- Stats -->
 <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
 	<div use:reveal class="glass grid grid-cols-2 gap-6 rounded-3xl px-6 py-8 sm:grid-cols-4 sm:px-10">
-		{#each stats as stat, i (stat.label)}
-			<div class="text-center" style="transition-delay: {i * 80}ms">
+		{#each stats as stat (stat.label)}
+			<div class="text-center">
 				<p class="text-gradient text-4xl font-extrabold tabular-nums sm:text-5xl">{stat.value}</p>
 				<p class="mt-2 text-sm text-slate-400">{stat.label}</p>
 			</div>
@@ -106,17 +106,16 @@
 	/>
 	<div class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
 		{#each features as feature, i (feature.title)}
-			<div
-				use:reveal={{ delay: (i % 3) * 90 }}
-				class="glass group rounded-2xl p-6 transition-transform duration-300 hover:-translate-y-1"
-			>
-				<div
-					class="from-brand-500/20 to-accent-cyan/20 text-brand-400 group-hover:text-accent-cyan flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br ring-1 ring-white/10 transition"
-				>
-					<feature.icon size={21} />
+			<div use:reveal={{ delay: (i % 3) * 90 }}>
+				<div class="glass group h-full rounded-2xl p-6 transition-transform duration-300 hover:-translate-y-1">
+					<div
+						class="from-brand-500/20 to-accent-cyan/20 text-brand-400 group-hover:text-accent-cyan flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br ring-1 ring-white/10 transition"
+					>
+						<feature.icon size={21} />
+					</div>
+					<h3 class="mt-5 text-base font-bold text-slate-100">{feature.title}</h3>
+					<p class="mt-2 text-sm leading-7 text-slate-400">{feature.description}</p>
 				</div>
-				<h3 class="mt-5 text-base font-bold text-slate-100">{feature.title}</h3>
-				<p class="mt-2 text-sm leading-7 text-slate-400">{feature.description}</p>
 			</div>
 		{/each}
 	</div>
@@ -175,7 +174,7 @@
 				</p>
 				<a
 					href={resolve('/uniform')}
-					class="from-brand-500 to-accent-cyan glow mt-7 inline-flex h-11 items-center gap-2 rounded-full bg-gradient-to-r px-6 text-sm font-semibold text-white transition hover:brightness-110"
+					class="btn-gradient glow mt-7 inline-flex h-11 items-center gap-2 rounded-full px-6 text-sm font-semibold text-white"
 				>
 					进入展示
 					<ArrowRight size={16} />

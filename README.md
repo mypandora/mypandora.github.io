@@ -53,6 +53,8 @@ pnpm deploy
 
 静态资源缓存与安全头在 [`static/_headers`](static/_headers) 中配置;Wrangler 配置见 [`wrangler.jsonc`](wrangler.jsonc)。
 
+> 旧的 GitHub Actions + SSH/rsync 部署方式已废弃,由上面的 Cloudflare Pages 流程取代;仓库中原有的 Umami 统计脚本也已移除(其免费服务已停止)。
+
 ## 目录结构
 
 ```

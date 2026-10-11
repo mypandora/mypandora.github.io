@@ -1,10 +1,15 @@
 /**
  * Svelte action: scroll-into-view reveal.
- * Adds the `in` class (paired with the `.reveal` CSS) once the element
- * enters the viewport, then stops observing.
+ * Owns the `reveal`/`in` classes paired with the `.reveal` CSS, so markup
+ * only needs `use:reveal`. Activates once when the element enters the
+ * viewport. Content stays visible when JS/IntersectionObserver is missing.
+ *
+ * Apply to wrapper elements: the activated transition owns the node's
+ * `transition` property, so interactive hover transitions belong on a
+ * child element.
  *
  * @param {HTMLElement} node
- * @param {{ delay?: number, threshold?: number, y?: number }} [options]
+ * @param {{ delay?: number, threshold?: number }} [options]
  * @returns {{ destroy(): void }}
  */
 export function reveal(node, options = {}) {
@@ -12,10 +17,11 @@ export function reveal(node, options = {}) {
 	const prefersReduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 	if (prefersReduced() || typeof IntersectionObserver === 'undefined') {
-		node.classList.add('in');
+		node.classList.add('reveal', 'in');
 		return { destroy() {} };
 	}
 
+	node.classList.add('reveal');
 	if (delay) node.style.transitionDelay = `${delay}ms`;
 
 	const observer = new IntersectionObserver(
@@ -23,6 +29,13 @@ export function reveal(node, options = {}) {
 			for (const entry of entries) {
 				if (entry.isIntersecting) {
 					node.classList.add('in');
+					node.addEventListener(
+						'transitionend',
+						() => {
+							node.style.transitionDelay = '';
+						},
+						{ once: true }
+					);
 					observer.unobserve(node);
 				}
 			}

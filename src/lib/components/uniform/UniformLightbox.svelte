@@ -8,6 +8,10 @@
 	/** @type {import('swiper').default | null} */
 	let gallery = $state(null);
 
+	const reduceMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+	const fadeDuration = reduceMotion ? 0 : 200;
+	const scaleDuration = reduceMotion ? 0 : 220;
+
 	$effect(() => {
 		/** @param {KeyboardEvent} e */
 		function onKeydown(e) {
@@ -26,25 +30,23 @@
 </script>
 
 <div
-	class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-5 backdrop-blur-md sm:p-8"
+	class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] backdrop-blur-md sm:px-8 sm:pt-8 sm:pb-[max(2rem,env(safe-area-inset-bottom))]"
 	role="dialog"
 	aria-modal="true"
 	aria-label="{categoryName}编号{school.code}方案"
 	tabindex="-1"
-	transition:fade={{ duration: 200 }}
+	transition:fade={{ duration: fadeDuration }}
 >
 	<button type="button" aria-label="关闭" class="absolute inset-0 z-0 cursor-default bg-transparent" onclick={onClose}
 	></button>
 
 	<div
 		class="glass relative z-10 mx-auto flex h-full w-full max-w-5xl flex-col rounded-3xl p-4 sm:p-6"
-		transition:scale={{ duration: 220, start: 0.94 }}
+		transition:scale={{ duration: scaleDuration, start: 0.94 }}
 	>
 		<div class="flex items-center justify-between text-slate-100">
 			<h2 class="flex items-center gap-2 text-sm font-semibold">
-				<span
-					class="from-brand-500 to-accent-cyan rounded-full bg-gradient-to-r px-2.5 py-0.5 text-xs font-bold text-white"
-				>
+				<span class="btn-gradient rounded-full px-2.5 py-0.5 text-xs font-bold text-white">
 					{school.code}
 				</span>
 				{categoryName}校服方案

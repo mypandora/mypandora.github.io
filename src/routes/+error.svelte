@@ -20,7 +20,7 @@
 		</p>
 		<a
 			href={resolve('/')}
-			class="from-brand-500 to-accent-cyan glow focus-visible:ring-brand-400 focus-visible:ring-offset-base mt-8 inline-flex h-11 items-center gap-2 rounded-full bg-gradient-to-r px-6 text-sm font-semibold text-white transition hover:brightness-110 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+			class="btn-gradient glow focus-visible:ring-brand-400 focus-visible:ring-offset-base mt-8 inline-flex h-11 items-center gap-2 rounded-full px-6 text-sm font-semibold text-white transition focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
 		>
 			<Home size={16} />
 			返回首页

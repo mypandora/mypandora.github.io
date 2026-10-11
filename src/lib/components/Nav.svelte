@@ -63,8 +63,7 @@
 						: 'text-slate-400 hover:text-white'}"
 				>
 					{#if active(link.href)}
-						<span class="from-brand-500/90 to-accent-cyan/80 absolute inset-0 rounded-full bg-gradient-to-r opacity-90"
-						></span>
+						<span class="btn-gradient absolute inset-0 rounded-full opacity-95"></span>
 					{/if}
 					<span class="relative">{link.label}</span>
 				</a>
