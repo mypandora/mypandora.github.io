@@ -1,5 +1,5 @@
 <script>
-	import ProjectCard from '$lib/components/site/ProjectCard.svelte';
+	import SpotlightCard from '$lib/components/site/SpotlightCard.svelte';
 	import { components, products, templates } from '$lib/data/projects';
 </script>
 
@@ -25,7 +25,7 @@
 	</div>
 	<div class="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
 		{#each components as item, i (item.name)}
-			<ProjectCard {item} index={i} />
+			<SpotlightCard {item} index={i} />
 		{/each}
 	</div>
 </section>
@@ -40,7 +40,7 @@
 	</div>
 	<div class="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
 		{#each products as item, i (item.name)}
-			<ProjectCard {item} index={i + components.length} />
+			<SpotlightCard {item} index={i + components.length} />
 		{/each}
 	</div>
 </section>
@@ -55,7 +55,7 @@
 	</div>
 	<div class="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
 		{#each templates as item, i (item.name)}
-			<ProjectCard {item} index={i} />
+			<SpotlightCard {item} index={i} />
 		{/each}
 	</div>
 </section>

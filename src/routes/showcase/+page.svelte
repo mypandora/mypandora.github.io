@@ -1,5 +1,5 @@
 <script>
-	import ProjectCard from '$lib/components/site/ProjectCard.svelte';
+	import SpotlightCard from '$lib/components/site/SpotlightCard.svelte';
 	import { templates } from '$lib/data/projects';
 </script>
 
@@ -16,7 +16,7 @@
 <section class="mx-auto max-w-7xl px-4 py-8 sm:px-6">
 	<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
 		{#each templates as item, i (item.name)}
-			<ProjectCard {item} index={i} />
+			<SpotlightCard {item} index={i} />
 		{/each}
 	</div>
 </section>
