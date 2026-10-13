@@ -25,7 +25,7 @@ pnpm lint       # prettier + eslint
 
 ## 部署到 Cloudflare Pages
 
-两种方式任选其一。
+可以通过 Cloudflare Pages 的 Git 集成自动部署，也可以在本地用 Wrangler 手动部署。当前仓库已删除 GitHub Actions 工作流，不会通过 GitHub Actions 自动部署。
 
 ### 方式一:Git 集成(推荐,无需 CI)
 
@@ -36,24 +36,20 @@ pnpm lint       # prettier + eslint
    - 构建输出目录:`build`
 3. 部署即可。推送 `main` 自动发布,预生成 Pull Request 预览。
 
-### 方式二:Wrangler / GitHub Actions
+### 方式二:Wrangler 本地手动部署(可选)
 
-本地手动部署:
+仓库保留 Wrangler 命令，供本地预览和手动发布使用:
 
 ```bash
+pnpm pages:dev  # 本地模拟 Cloudflare Pages
 pnpm deploy
 ```
 
-通过 CI:仓库已包含 `.github/workflows/main.yml`,在 GitHub 仓库 Secrets 中配置:
+`wrangler` 依赖和根目录的 [`wrangler.jsonc`](wrangler.jsonc) 仅在使用这些 Wrangler 命令时需要；如果只用 Cloudflare Pages Git 集成，可以移除它们以及 `pages:dev`、`deploy` 脚本。`.wrangler/` 是 Wrangler 本地生成的缓存目录，不是项目配置，也不需要提交。
 
-- `CLOUDFLARE_API_TOKEN`
-- `CLOUDFLARE_ACCOUNT_ID`
+静态资源缓存与安全头在 [`static/_headers`](static/_headers) 中配置。若 `*.pages.dev` 已更新而自定义域名仍显示旧页面，可检查 Cloudflare Cache Rules / Browser Cache TTL，并清除该域名的缓存；仓库的 `_headers` 已设置预渲染 HTML 不缓存、带哈希静态资源长期缓存。
 
-推送到 `main` 后会自动执行 check / lint / build 并部署。
-
-静态资源缓存与安全头在 [`static/_headers`](static/_headers) 中配置;Wrangler 配置见 [`wrangler.jsonc`](wrangler.jsonc)。
-
-> 旧的 GitHub Actions + SSH/rsync 部署方式已废弃,由上面的 Cloudflare Pages 流程取代;仓库中原有的 Umami 统计脚本也已移除(其免费服务已停止)。
+> 旧的 GitHub Actions + SSH/rsync 部署方式已废弃；当前没有 GitHub Actions 部署工作流。仓库中原有的 Umami 统计脚本也已移除。
 
 ## 目录结构
 
